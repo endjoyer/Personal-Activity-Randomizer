@@ -1,0 +1,27 @@
+{
+  "name": "random-leisure",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@reduxjs/toolkit": "^1.9.7",
+    "next": "13.5.4",
+    "react": "^18",
+    "react-dom": "^18",
+    "react-redux": "^8.1.3",
+    "redux": "^4.2.1",
+    "uuid": "^9.0.1"
+  },
+  "devDependencies": {
+    "@types/node": "^20",
+    "@types/react": "^18",
+    "@types/react-dom": "^18",
+    "@types/uuid": "^9.0.5",
+    "typescript": "^5"
+  }
+}
