@@ -6,7 +6,7 @@ import { addSection, addActivity } from '../redux/sectionsSlice';
 
 export default function Home() {
   const [input, setInput] = useState('');
-  const [selectedSection, setSelectedSection] = useState<string | null>(null);
+  const [selectedSection, setSelectedSection] = useState<string>('');
   const sections = useSelector((state: RootState) => state.sections);
   const dispatch = useDispatch();
 
@@ -37,7 +37,6 @@ export default function Home() {
           </div>
         ))}
       </div>
-      <div>{/* Randomizer goes here */}</div>
     </main>
   );
 }
