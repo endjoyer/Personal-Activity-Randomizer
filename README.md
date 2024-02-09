@@ -19,7 +19,9 @@ In this pet project, I want to create a useful application for myself and maybe 
 and others
 
 So the quality is likely to be lame. But in the future it is planned to fix this and add new functions. Because I think I will use this application often and maybe it will be useful to someone.
+
 ---
+
 (RUS)
 Приложение для случайного подбора видов досуга, которые вы добавили для себя. 
 
