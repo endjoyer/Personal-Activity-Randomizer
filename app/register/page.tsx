@@ -1,14 +1,21 @@
-"use client"
+'use client';
 import { useState, FormEvent } from 'react';
 import Link from 'next/link';
 import axios from 'axios';
 import { useRouter } from 'next/navigation';
+import { useDispatch } from 'react-redux';
+import { setToken, setUser } from '../../redux/authSlice';
+import Cookies from 'js-cookie';
 
 const Register = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const router = useRouter();
-  const [errors, setErrors] = useState<{ username?: string; password?: string }>({});
+  const dispatch = useDispatch();
+  const [errors, setErrors] = useState<{
+    username?: string;
+    password?: string;
+  }>({});
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
@@ -16,11 +23,14 @@ const Register = () => {
     setErrors(errs);
     if (Object.keys(errs).length === 0) {
       try {
-        await axios.post('/api/auth/register', {
+        const res = await axios.post('/api/auth/register', {
           username,
           password,
         });
-        router.push('/login');
+        Cookies.set('token', res.data.token);
+        dispatch(setToken(res.data.token));
+        dispatch(setUser(username));
+        router.push('/');
       } catch (err) {
         console.error(err);
         setErrors({ ...errs, username: 'Username is already taken' });
@@ -59,9 +69,7 @@ const Register = () => {
         {errors.password && <p>{errors.password}</p>}
         <button type="submit">Register</button>
       </form>
-      <Link href="/login">
-        Already have an account? Login
-      </Link>
+      <Link href="/login">Already have an account? Login</Link>
     </div>
   );
 };

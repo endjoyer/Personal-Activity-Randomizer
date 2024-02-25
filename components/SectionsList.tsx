@@ -10,11 +10,19 @@ import {
   renameSection,
   renameActivity,
   moveActivity,
+  fetchSections,
+  deleteSection,
+  updateSection,
+  updateActivity,
+  deleteActivity,
 } from '../redux/sectionsSlice';
 import RenamePopup from './RenamePopup';
 
 const SectionsList = () => {
   const [isMenuOpen, setIsMenuOpen] = useState<{ [key: string]: boolean }>({});
+  const [expandedSections, setExpandedSections] = useState<{
+    [key: string]: boolean;
+  }>({});
   const [editingId, setEditingId] = useState<string | null>(null);
   const [currentName, setCurrentName] = useState('');
   const [currentSectionId, setCurrentSectionId] = useState('');
@@ -28,19 +36,19 @@ const SectionsList = () => {
   const dispatch = useDispatch();
 
   const handleSelectSection = (sectionId: string) => {
-    dispatch(selectSection(sectionId));
+    dispatch(selectSection(sectionId === selectedSectionId ? null : sectionId));
   };
 
   const handleRemoveSection = (sectionId: string) => {
-    dispatch(removeSection(sectionId));
+    dispatch(deleteSection(sectionId));
   };
 
   const handleRemoveActivity = (sectionId: string, activityId: string) => {
-    dispatch(removeActivity({ sectionId, activityId }));
+    dispatch(deleteActivity({ sectionId, activityId }));
   };
 
   const handleRenameSection = (sectionId: string, newName: string) => {
-    dispatch(renameSection({ sectionId, newName }));
+    dispatch(updateSection({ sectionId, newName }));
     setEditingId(null);
   };
 
@@ -49,12 +57,20 @@ const SectionsList = () => {
     activityId: string,
     newName: string
   ) => {
-    dispatch(renameActivity({ sectionId, activityId, newName }));
+    dispatch(updateActivity({ sectionId, activityId, newName }));
     setEditingId(null);
   };
 
   const toggleMenu = (sectionId: string) => {
     setIsMenuOpen((prev) => ({ ...prev, [sectionId]: !prev[sectionId] }));
+    console.log(sectionId);
+  };
+
+  const toggleSection = (sectionId: string) => {
+    setExpandedSections((prev) => ({
+      ...prev,
+      [sectionId]: !prev[sectionId],
+    }));
   };
 
   const onDragEnd = (result: any) => {
@@ -78,6 +94,10 @@ const SectionsList = () => {
   };
 
   useEffect(() => {
+    dispatch(fetchSections());
+  }, [dispatch]);
+
+  useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
         setIsMenuOpen({});
@@ -92,23 +112,27 @@ const SectionsList = () => {
     <DragDropContext onDragEnd={onDragEnd}>
       {sections.map((section) => (
         <div
-          key={section.id}
+          key={section._id}
           className="p-4 bg-white shadow rounded mb-2 relative"
         >
           <div
-            onClick={() => handleSelectSection(section.id)}
-            className={`flex justify-between items-center ${
-              section.id === selectedSectionId ? 'font-bold' : ''
+            onClick={() => {
+              handleSelectSection(section._id);
+              toggleSection(section._id);
+            }}
+            className={`flex justify-between items-center cursor-pointer${
+              section._id === selectedSectionId ? 'font-bold' : ''
             }`}
           >
+            <span>▼</span>
             <span>{section.name}</span>
             <button
-              onClick={() => toggleMenu(section.id)}
+              onClick={() => toggleMenu(section._id)}
               className="text-gray-500 hover:text-gray-700"
             >
-              &#8942;
+              ⋮
             </button>
-            {isMenuOpen[section.id] && (
+            {isMenuOpen[section._id] && (
               <div
                 className="origin-top-right absolute right-0 mt-28 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 z-10"
                 ref={menuRef}
@@ -117,7 +141,7 @@ const SectionsList = () => {
                   <li
                     className="p-2 hover:bg-gray-100 cursor-pointer"
                     onClick={() => {
-                      setEditingId(section.id);
+                      setEditingId(section._id);
                       setCurrentName(section?.name || '');
                       setIsActivity(false);
                     }}
@@ -126,7 +150,7 @@ const SectionsList = () => {
                   </li>
                   <li
                     className="p-2 hover:bg-gray-100 cursor-pointer"
-                    onClick={() => handleRemoveSection(section.id)}
+                    onClick={() => handleRemoveSection(section._id)}
                   >
                     Удалить
                   </li>
@@ -134,65 +158,72 @@ const SectionsList = () => {
               </div>
             )}
           </div>
-          <Droppable droppableId={section.id}>
-            {(provided) => (
-              <div ref={provided.innerRef} {...provided.droppableProps}>
-                {section.activities.map((activity, index) => (
-                  <Draggable
-                    key={activity.id}
-                    draggableId={activity.id}
-                    index={index}
-                  >
-                    {(provided) => (
-                      <div
-                        className="flex justify-between items-center"
-                        ref={provided.innerRef}
-                        {...provided.draggableProps}
-                        {...provided.dragHandleProps}
-                      >
-                        {activity.name}
-                        <button
-                          onClick={() => toggleMenu(activity.id)}
-                          className="text-gray-500 hover:text-gray-700"
+          {expandedSections[section._id] && (
+            <Droppable droppableId={section._id}>
+              {(provided) => (
+                <div ref={provided.innerRef} {...provided.droppableProps}>
+                  {section.activities.map((activity, index) => (
+                    <Draggable
+                      key={activity._id}
+                      draggableId={activity._id}
+                      index={index}
+                    >
+                      {(provided, snapshot) => (
+                        <div
+                          className={`flex justify-between items-center p-2 my-1 bg-gray-100 rounded ${
+                            snapshot.isDragging ? 'shadow-lg' : ''
+                          }`}
+                          ref={provided.innerRef}
+                          {...provided.draggableProps}
+                          {...provided.dragHandleProps}
                         >
-                          &#8942;
-                        </button>
-                        {isMenuOpen[activity.id] && (
-                          <div
-                            className="origin-top-right absolute right-0 mt-28 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 z-10"
-                            ref={menuRef}
+                          {activity.name}
+                          <button
+                            onClick={() => toggleMenu(activity._id)}
+                            className="text-gray-500 hover:text-gray-700"
                           >
-                            <ul>
-                              <li
-                                className="p-2 hover:bg-gray-100 cursor-pointer"
-                                onClick={() => {
-                                  setEditingId(activity.id);
-                                  setCurrentSectionId(section.id);
-                                  setCurrentName(activity?.name || '');
-                                  setIsActivity(true);
-                                }}
-                              >
-                                Переименовать
-                              </li>
-                              <li
-                                className="p-2 hover:bg-gray-100 cursor-pointer"
-                                onClick={() =>
-                                  handleRemoveActivity(section.id, activity.id)
-                                }
-                              >
-                                Удалить
-                              </li>
-                            </ul>
-                          </div>
-                        )}
-                      </div>
-                    )}
-                  </Draggable>
-                ))}
-                {provided.placeholder}
-              </div>
-            )}
-          </Droppable>
+                            ⋮
+                          </button>
+                          {isMenuOpen[activity._id] && (
+                            <div
+                              className="origin-top-right absolute right-0 mt-28 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 z-10"
+                              ref={menuRef}
+                            >
+                              <ul>
+                                <li
+                                  className="p-2 hover:bg-gray-100 cursor-pointer"
+                                  onClick={() => {
+                                    setEditingId(activity._id);
+                                    setCurrentSectionId(section._id);
+                                    setCurrentName(activity?.name || '');
+                                    setIsActivity(true);
+                                  }}
+                                >
+                                  Переименовать
+                                </li>
+                                <li
+                                  className="p-2 hover:bg-gray-100 cursor-pointer"
+                                  onClick={() =>
+                                    handleRemoveActivity(
+                                      section._id,
+                                      activity._id
+                                    )
+                                  }
+                                >
+                                  Удалить
+                                </li>
+                              </ul>
+                            </div>
+                          )}
+                        </div>
+                      )}
+                    </Draggable>
+                  ))}
+                  {provided.placeholder}
+                </div>
+              )}
+            </Droppable>
+          )}
         </div>
       ))}
       {editingId && (

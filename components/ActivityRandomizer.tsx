@@ -9,7 +9,7 @@ const ActivityRandomizer = () => {
   );
   const sections = useSelector((state: RootState) => state.sections.sections);
   const selectedActivities = sections.find(
-    (section) => section.id === selectedSection
+    (section) => section._id === selectedSection
   )?.activities;
 
   const handleRandomize = () => {
@@ -20,16 +20,25 @@ const ActivityRandomizer = () => {
   };
 
   return (
-    <div>
-      <button onClick={handleRandomize}>Рандомайзер</button>
-      {selectedSection ? (
-        <div>
-          <h3>Случайная активность:</h3>
-          <p>{randomActivity || 'Нажмите кнопку для выбора'}</p>
-        </div>
-      ) : (
-        <p>Выберите раздел</p>
-      )}
+    <div className="p-4">
+      <button
+        className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+        onClick={handleRandomize}
+      >
+        Рандомайзер
+      </button>
+      <div className="mt-4">
+        {selectedSection ? (
+          <div className="text-center">
+            <h3 className="text-lg font-semibold">Случайная активность:</h3>
+            <p className="text-xl">
+              {randomActivity || 'Нажмите кнопку для выбора'}
+            </p>
+          </div>
+        ) : (
+          <p className="text-center">Выберите раздел</p>
+        )}
+      </div>
     </div>
   );
 };

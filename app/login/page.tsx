@@ -1,15 +1,21 @@
-"use client"
+'use client';
 import { useState, FormEvent } from 'react';
 import Link from 'next/link';
 import axios from 'axios';
 import Cookies from 'js-cookie';
 import { useRouter } from 'next/navigation';
+import { useDispatch } from 'react-redux';
+import { setToken, setUser } from '../../redux/authSlice';
 
 const Login = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [errors, setErrors] = useState<{
+    username?: string;
+    password?: string;
+  }>({});
   const router = useRouter();
-  const [errors, setErrors] = useState<{ username?: string; password?: string }>({});
+  const dispatch = useDispatch();
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
@@ -22,6 +28,8 @@ const Login = () => {
           password,
         });
         Cookies.set('token', res.data.token);
+        dispatch(setToken(res.data.token));
+        dispatch(setUser(username));
         router.push('/');
       } catch (err) {
         console.error(err);
@@ -61,9 +69,7 @@ const Login = () => {
         {errors.password && <p>{errors.password}</p>}
         <button type="submit">Login</button>
       </form>
-      <Link href="/register">
-        Don't have an account? Register
-      </Link>
+      <Link href="/register">Don't have an account? Register</Link>
     </div>
   );
 };
