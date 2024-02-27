@@ -1,6 +1,5 @@
 import { createSlice, PayloadAction, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
-import { v4 as uuidv4 } from 'uuid';
 
 interface Section {
   _id: string;
@@ -16,13 +15,16 @@ interface Activity {
 interface SectionsState {
   sections: Section[];
   selectedSection: string | null;
+  loading: boolean;
 }
 
 const initialState: SectionsState = {
   sections: [],
   selectedSection: null,
+  loading: false,
 };
 
+// Получение разделов
 export const fetchSections = createAsyncThunk(
   'sections/fetchSections',
   async (_, { getState, rejectWithValue }) => {
@@ -143,79 +145,8 @@ const sectionsSlice = createSlice({
   name: 'sections',
   initialState,
   reducers: {
-    addSection: (state, action: PayloadAction<string>) => {
-      state.sections.push({
-        _id: uuidv4(),
-        name: action.payload,
-        activities: [],
-      });
-    },
-    addActivity: (
-      state,
-      action: PayloadAction<{ sectionId: string; activityName: string }>
-    ) => {
-      const { sectionId, activityName } = action.payload;
-      const section = state.sections.find(
-        (section) => section._id === sectionId
-      );
-      if (section) {
-        section.activities.push({ _id: uuidv4(), name: activityName });
-      }
-    },
     selectSection: (state, action: PayloadAction<string | null>) => {
       state.selectedSection = action.payload;
-    },
-    removeSection: (state, action: PayloadAction<string>) => {
-      state.sections = state.sections.filter(
-        (section) => section._id !== action.payload
-      );
-    },
-    removeActivity: (
-      state,
-      action: PayloadAction<{ sectionId: string; activityId: string }>
-    ) => {
-      const { sectionId, activityId } = action.payload;
-      const section = state.sections.find(
-        (section) => section._id === sectionId
-      );
-      if (section) {
-        section.activities = section.activities.filter(
-          (activity) => activity._id !== activityId
-        );
-      }
-    },
-    renameSection: (
-      state,
-      action: PayloadAction<{ sectionId: string; newName: string }>
-    ) => {
-      const { sectionId, newName } = action.payload;
-      const section = state.sections.find(
-        (section) => section._id === sectionId
-      );
-      if (section) {
-        section.name = newName;
-      }
-    },
-    renameActivity: (
-      state,
-      action: PayloadAction<{
-        sectionId: string;
-        activityId: string;
-        newName: string;
-      }>
-    ) => {
-      const { sectionId, activityId, newName } = action.payload;
-      const section = state.sections.find(
-        (section) => section._id === sectionId
-      );
-      if (section) {
-        const activity = section.activities.find(
-          (activity) => activity._id === activityId
-        );
-        if (activity) {
-          activity.name = newName;
-        }
-      }
     },
     moveActivity: (
       state,
@@ -237,8 +168,15 @@ const sectionsSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
+      .addCase(fetchSections.pending, (state) => {
+        state.loading = true;
+      })
       .addCase(fetchSections.fulfilled, (state, action) => {
         state.sections = action.payload;
+        state.loading = false;
+      })
+      .addCase(fetchSections.rejected, (state) => {
+        state.loading = false;
       })
       .addCase(addNewSection.fulfilled, (state, action) => {
         state.sections.push(action.payload);
@@ -293,15 +231,6 @@ const sectionsSlice = createSlice({
   },
 });
 
-export const {
-  addSection,
-  addActivity,
-  selectSection,
-  removeSection,
-  removeActivity,
-  renameSection,
-  renameActivity,
-  moveActivity,
-} = sectionsSlice.actions;
+export const { selectSection, moveActivity } = sectionsSlice.actions;
 
 export default sectionsSlice.reducer;
