@@ -1,4 +1,7 @@
 'use client';
+import { useDispatch } from 'react-redux';
+import { useEffect } from 'react';
+import { selectSection } from '@/redux/sectionsSlice';
 import { withAuth } from '../components/withAuth';
 import ActivityForm from '../components/ActivityForm';
 import SectionsList from '../components/SectionsList';
@@ -9,9 +12,24 @@ import { jwtVerify } from 'jose';
 import type { NextRequest } from 'next/server';
 
 function Home() {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    const handleDocumentClick = (event: MouseEvent) => {
+      const target = event.target as HTMLElement;
+      const isClickInsideFormOrButton = target.closest('.activity-form');
+      if (!isClickInsideFormOrButton) {
+        dispatch(selectSection(null));
+      }
+    };
+
+    document.addEventListener('click', handleDocumentClick);
+    return () => document.removeEventListener('click', handleDocumentClick);
+  }, [dispatch]);
+
   return (
     <main className="flex">
-      <div className="w-1/4">
+      <div className="w-1/4 ml-3 mr-3">
         <LogoutButton />
         <SectionsList />
       </div>

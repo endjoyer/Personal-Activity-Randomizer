@@ -114,14 +114,14 @@ const SectionsList = () => {
           {sections.map((section) => (
             <div
               key={section._id}
-              className="p-4 bg-white shadow rounded mb-2 relative"
+              className="bg-white shadow rounded mb-2 relative activity-form cursor-pointer"
             >
               <div
                 onClick={() => {
                   handleSelectSection(section._id);
                   toggleSection(section._id);
                 }}
-                className={`flex justify-between items-center cursor-pointer${
+                className={`flex p-4 justify-between items-center cursor-pointer${
                   section._id === selectedSectionId ? 'font-bold' : ''
                 }`}
               >
@@ -162,7 +162,11 @@ const SectionsList = () => {
               {expandedSections[section._id] && (
                 <Droppable droppableId={section._id}>
                   {(provided) => (
-                    <div ref={provided.innerRef} {...provided.droppableProps}>
+                    <div
+                      className={'p-4 pt-0'}
+                      ref={provided.innerRef}
+                      {...provided.droppableProps}
+                    >
                       {section.activities.map((activity, index) => (
                         <Draggable
                           key={activity._id}
@@ -171,7 +175,7 @@ const SectionsList = () => {
                         >
                           {(provided, snapshot) => (
                             <div
-                              className={`flex justify-between items-center p-2 my-1 bg-gray-100 rounded ${
+                              className={`flex justify-between items-center p-2 my-1 bg-gray-100 rounded first:mt-0 last:mb-0 ${
                                 snapshot.isDragging ? 'shadow-lg' : ''
                               }`}
                               ref={provided.innerRef}

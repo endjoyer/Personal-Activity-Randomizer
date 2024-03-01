@@ -15,8 +15,8 @@ const ActivityForm = () => {
   );
   const dispatch = useDispatch();
 
-  const handleAdd = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === 'Enter' && input.trim() !== '') {
+  const handleAddClick = () => {
+    if (input.trim() !== '') {
       if (selectedSection) {
         dispatch(
           addNewActivity({ sectionId: selectedSection, activityName: input })
@@ -28,30 +28,26 @@ const ActivityForm = () => {
     }
   };
 
-  const handleResetSelection = () => {
-    dispatch(selectSection(null));
-  };
-
   return (
-    <div className="p-4 flex items-center gap-2">
-      <input
-        className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-        value={input}
-        onChange={(e) => setInput(e.target.value)}
-        onKeyPress={handleAdd}
-        placeholder={
-          selectedSection ? 'Добавить активность в раздел' : 'Добавить раздел'
-        }
-      />
-      {selectedSection && (
+    <div className="activity-form p-4 flex flex-col gap-2">
+      <h3 className="text-lg font-semibold">
+        {selectedSection ? 'Добавить активность' : 'Добавить раздел'}
+      </h3>
+      <div className="flex items-center gap-2">
+        <input
+          className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+          value={input}
+          onChange={(e) => setInput(e.target.value)}
+          onKeyPress={(e) => e.key === 'Enter' && handleAddClick()}
+        />
         <button
-          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+          className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
           type="button"
-          onClick={handleResetSelection}
+          onClick={handleAddClick}
         >
-          Сбросить
+          Добавить
         </button>
-      )}
+      </div>
     </div>
   );
 };
