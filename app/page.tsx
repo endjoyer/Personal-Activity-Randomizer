@@ -29,14 +29,14 @@ function Home() {
 
   return (
     <main className="flex">
-      <div className="w-1/4 ml-3 mr-3">
+      <section className="w-60 p-4 pb-6">
         <LogoutButton />
         <SectionsList />
-      </div>
-      <div className="w-3/4">
+      </section>
+      <section className="flex-1">
         <ActivityForm />
         <ActivityRandomizer />
-      </div>
+      </section>
     </main>
   );
 }

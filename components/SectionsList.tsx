@@ -23,6 +23,10 @@ const SectionsList = () => {
   const [editingId, setEditingId] = useState<string | null>(null);
   const [currentName, setCurrentName] = useState('');
   const [currentSectionId, setCurrentSectionId] = useState('');
+  const [popupPosition, setPopupPosition] = useState<{
+    top: number;
+    left: number;
+  }>({ top: 0, left: 0 });
   const [isActivity, setIsActivity] = useState(false);
   const sections = useSelector((state: RootState) => state.sections.sections);
   const selectedSectionId = useSelector(
@@ -39,10 +43,12 @@ const SectionsList = () => {
 
   const handleRemoveSection = (sectionId: string) => {
     dispatch(deleteSection(sectionId));
+    setIsMenuOpen({});
   };
 
   const handleRemoveActivity = (sectionId: string, activityId: string) => {
     dispatch(deleteActivity({ sectionId, activityId }));
+    setIsMenuOpen({});
   };
 
   const handleRenameSection = (sectionId: string, newName: string) => {
@@ -59,8 +65,36 @@ const SectionsList = () => {
     setEditingId(null);
   };
 
-  const toggleMenu = (sectionId: string) => {
+  const handleRenameClick = (
+    event: React.MouseEvent<HTMLLIElement, MouseEvent>,
+    id: string,
+    name: string,
+    isActivity: boolean
+  ) => {
+    const rect = event.currentTarget.getBoundingClientRect();
+    const top = rect.bottom - 50 + window.scrollY;
+    const left = rect.left + window.scrollX;
+    setEditingId(id);
+    setCurrentName(name);
+    setIsActivity(isActivity);
+    setPopupPosition({ top, left });
+    setIsMenuOpen({});
+  };
+
+  const toggleSectionMenu = (
+    event: React.MouseEvent<HTMLButtonElement>,
+    sectionId: string
+  ) => {
+    event.stopPropagation();
     setIsMenuOpen((prev) => ({ ...prev, [sectionId]: !prev[sectionId] }));
+  };
+
+  const toggleActivityMenu = (
+    event: React.MouseEvent<HTMLButtonElement>,
+    activityId: string
+  ) => {
+    event.stopPropagation();
+    setIsMenuOpen((prev) => ({ ...prev, [activityId]: !prev[activityId] }));
   };
 
   const toggleSection = (sectionId: string) => {
@@ -114,7 +148,7 @@ const SectionsList = () => {
           {sections.map((section) => (
             <div
               key={section._id}
-              className="bg-white shadow rounded mb-2 relative activity-form cursor-pointer"
+              className="bg-white shadow rounded mb-2 relative activity-form"
             >
               <div
                 onClick={() => {
@@ -122,14 +156,20 @@ const SectionsList = () => {
                   toggleSection(section._id);
                 }}
                 className={`flex p-4 justify-between items-center cursor-pointer${
-                  section._id === selectedSectionId ? 'font-bold' : ''
+                  section._id === selectedSectionId ? ' font-bold' : ''
                 }`}
               >
-                <span>&#9654;</span>
+                <span
+                  className={`transform transition-transform ${
+                    expandedSections[section._id] ? 'rotate-90' : ''
+                  }`}
+                >
+                  &#9654;
+                </span>
                 <span>{section.name}</span>
                 <button
-                  onClick={() => toggleMenu(section._id)}
-                  className="text-gray-500 hover:text-gray-700"
+                  onClick={(event) => toggleSectionMenu(event, section._id)}
+                  className="text-gray-500 hover:text-gray-700 p-1"
                 >
                   ⋮
                 </button>
@@ -141,10 +181,13 @@ const SectionsList = () => {
                     <ul>
                       <li
                         className="p-2 hover:bg-gray-100 cursor-pointer"
-                        onClick={() => {
-                          setEditingId(section._id);
-                          setCurrentName(section?.name || '');
-                          setIsActivity(false);
+                        onClick={(event) => {
+                          handleRenameClick(
+                            event,
+                            section._id,
+                            section.name,
+                            false
+                          );
                         }}
                       >
                         Переименовать
@@ -184,8 +227,10 @@ const SectionsList = () => {
                             >
                               {activity.name}
                               <button
-                                onClick={() => toggleMenu(activity._id)}
-                                className="text-gray-500 hover:text-gray-700"
+                                onClick={(event) =>
+                                  toggleActivityMenu(event, activity._id)
+                                }
+                                className="text-gray-500 hover:text-gray-700 p-1"
                               >
                                 ⋮
                               </button>
@@ -197,11 +242,14 @@ const SectionsList = () => {
                                   <ul>
                                     <li
                                       className="p-2 hover:bg-gray-100 cursor-pointer"
-                                      onClick={() => {
-                                        setEditingId(activity._id);
+                                      onClick={(event) => {
+                                        handleRenameClick(
+                                          event,
+                                          activity._id,
+                                          activity?.name,
+                                          true
+                                        );
                                         setCurrentSectionId(section._id);
-                                        setCurrentName(activity?.name || '');
-                                        setIsActivity(true);
                                       }}
                                     >
                                       Переименовать
@@ -246,6 +294,8 @@ const SectionsList = () => {
                     : (newName) => handleRenameSection(editingId, newName)
                 }
                 onCancel={() => setEditingId(null)}
+                top={popupPosition.top}
+                left={popupPosition.left}
               />
             </div>
           )}
