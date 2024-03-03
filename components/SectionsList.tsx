@@ -1,8 +1,13 @@
 'use client';
 import React, { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
-import { RootState } from '../redux/store';
+import {
+  DragDropContext,
+  Droppable,
+  Draggable,
+  DropResult,
+} from 'react-beautiful-dnd';
+import { AppDispatch, RootState } from '../redux/store';
 import {
   selectSection,
   moveActivity,
@@ -11,6 +16,7 @@ import {
   updateSection,
   updateActivity,
   deleteActivity,
+  updateActivityOrder,
 } from '../redux/sectionsSlice';
 import RenamePopup from './RenamePopup';
 import Loader from './Loader';
@@ -35,7 +41,7 @@ const SectionsList = () => {
   const loading = useSelector((state: RootState) => state.sections.loading);
   const menuRef = useRef<HTMLDivElement>(null);
   const renamePopupRef = useRef<HTMLDivElement>(null);
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatch>();
 
   const handleSelectSection = (sectionId: string) => {
     dispatch(selectSection(sectionId));
@@ -104,7 +110,7 @@ const SectionsList = () => {
     }));
   };
 
-  const onDragEnd = (result: any) => {
+  const onDragEnd = (result: DropResult) => {
     if (!result.destination) return;
 
     const { source, destination } = result;
@@ -115,11 +121,24 @@ const SectionsList = () => {
       return;
     }
 
+    const section = sections.find((s) => s._id === source.droppableId);
+    if (!section) return;
+    const newActivities = Array.from(section.activities);
+    const [removed] = newActivities.splice(source.index, 1);
+    newActivities.splice(destination.index, 0, removed);
+
     dispatch(
       moveActivity({
         sectionId: source.droppableId,
         fromIndex: source.index,
         toIndex: destination.index,
+      })
+    );
+
+    dispatch(
+      updateActivityOrder({
+        sectionId: source.droppableId,
+        orderedActivities: newActivities.map((a) => a._id),
       })
     );
   };
@@ -225,7 +244,7 @@ const SectionsList = () => {
                               {...provided.draggableProps}
                               {...provided.dragHandleProps}
                             >
-                              {activity.name}
+                              {index + 1}. {activity.name}
                               <button
                                 onClick={(event) =>
                                   toggleActivityMenu(event, activity._id)

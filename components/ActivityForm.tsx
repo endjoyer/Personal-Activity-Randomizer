@@ -1,19 +1,15 @@
 'use client';
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from '../redux/store';
-import {
-  selectSection,
-  addNewSection,
-  addNewActivity,
-} from '../redux/sectionsSlice';
+import { AppDispatch, RootState } from '../redux/store';
+import { addNewSection, addNewActivity } from '../redux/sectionsSlice';
 
 const ActivityForm = () => {
   const [input, setInput] = useState('');
   const selectedSection = useSelector(
     (state: RootState) => state.sections.selectedSection
   );
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatch>();
 
   const handleAddClick = () => {
     if (input.trim() !== '') {

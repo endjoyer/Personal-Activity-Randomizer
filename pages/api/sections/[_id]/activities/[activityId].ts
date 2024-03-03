@@ -15,7 +15,6 @@ export default async function handler(
   }
 
   const { _id, activityId } = req.query;
-  console.log(activityId);
   const section = await Section.findById(_id);
   if (!section) {
     return res.status(404).json({ message: 'Section not found' });

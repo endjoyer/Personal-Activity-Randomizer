@@ -141,6 +141,29 @@ export const deleteActivity = createAsyncThunk(
   }
 );
 
+export const updateActivityOrder = createAsyncThunk(
+  'sections/updateActivityOrder',
+  async (
+    {
+      sectionId,
+      orderedActivities,
+    }: { sectionId: string; orderedActivities: string[] },
+    { rejectWithValue }
+  ) => {
+    try {
+      const response = await axios.put(
+        `/api/sections/${sectionId}/activities/order`,
+        {
+          orderedActivities,
+        }
+      );
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
+
 const sectionsSlice = createSlice({
   name: 'sections',
   initialState,
@@ -226,6 +249,14 @@ const sectionsSlice = createSlice({
           section.activities = section.activities.filter(
             (a) => a._id !== action.meta.arg.activityId
           );
+        }
+      })
+      .addCase(updateActivityOrder.fulfilled, (state, action) => {
+        const sectionIndex = state.sections.findIndex(
+          (section) => section._id === action.meta.arg.sectionId
+        );
+        if (sectionIndex !== -1) {
+          state.sections[sectionIndex].activities = action.payload.activities;
         }
       });
   },

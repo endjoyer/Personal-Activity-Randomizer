@@ -1,26 +1,32 @@
 # Personal Activity Randomizer (PAR)
 
 (EN)
-An application for the random selection of leisure activities that you have added for yourself.
+An application for a random selection of leisure activities that you have added for yourself.
 
 ## What is the application for?
 
-I think everyone has had it happen. I've completed some difficult task and it's finally time to have a good rest. But you can't choose what to do on your well-deserved vacation. But I don't have the strength to think anymore. And as a result, a lot of time has passed, and you realize yourself watching a YouTube video about a colony of ants or watching the hundredth shorts. And you go to bed feeling the futility of your time.
+I think everyone has had this experience. I've completed some difficult task and it's time to finally have a good rest. But you can't choose what to do on your well-deserved vacation. But I don't have the strength to think anymore. And as a result, a lot of time has passed, and you realize yourself watching a YouTube video about an ant colony or watching the hundredth shorts. And you go to bed feeling the futility of your time.
 
-With this application, you can pre-select a list of things you would like to do. And you will need to put much less effort into choosing and thinking, which will certainly motivate you to a more active and interesting vacation. Although you may have other plans. Who knows? You write down what you are likely to do. And if you don't like the randomly suggested option, you can always try again or just choose the one from the list. Everything is in your hands... except random )
+With this application, you can pre-select a list of things you would like to do. And you will need to put much less effort into choosing and thinking, which will certainly motivate you to a more active and interesting vacation. Although you may have other plans. Who knows? You write down what you will probably have to do. And if you don't like the randomly suggested option, you can always try again or just choose the one from the list. Everything is in your hands... except by accident)
 
-## Technology and what will happen here
+## My motivation
 
-In this pet project, I want to create a useful application for myself and maybe for someone else. At the same time, partly on technology technologies and language that I have yet to fully study, such as:
+In this pet project, I want to create a useful application, for myself and maybe for someone else.
+During it, I plan to use various interesting and in-demand technologies to improve my skills and enrich my experience.
+
+## Technologies
 
 - TypeScript
 - Next
 - Redux
 - MongoDB
-- Docker
+- Tailwindcss
+- Docker(in the future)
   and others
 
-So the quality is likely to be lame. But in the future it is planned to fix this and add new functions. Because I think I will use this application often and maybe it will be useful to someone.
+## Development Stage (Pre-Alpha)
+
+At the moment, the applications are in development. Many planned functions have not been implemented or completed, there is only minimal styling, and code refactor will occur, approximately 50% of the plan has been completed. This will be gradually corrected in the future.
 
 ---
 
@@ -44,7 +50,24 @@ So the quality is likely to be lame. But in the future it is planned to fix this
 - Next
 - Redux
 - MongoDB
-- Docker
+- Tailwindcss
+- Docker(в будущем)
   и другие
 
-Так что качество вероятно будет хромать. Но в будущем планируется это исправлять и добавлять новые функции. Т.к. я думаю буду часто пользоваться этим приложением и возможно оно кому-то пригодиться.
+## Команды
+
+```bash
+# установка зависимостей
+$ npm install
+
+# запуск сервера для разработки localhost:3000
+$ npm run dev
+
+# сборка и запуск сервера
+$ npm run build
+$ npm run start
+```
+
+## Стадия разработки (Pre-Alpha)
+
+На данный момент, приложения в разработке. Не реализованно и не доделано много запланируемых функций, есть только минимальная стилизация, и будет происходить рефактор кода, примерно выполнено 50% из плана. В будущем это будет постепенно исправляться.
