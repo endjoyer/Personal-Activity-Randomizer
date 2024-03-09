@@ -1,4 +1,5 @@
 'use client';
+import '../i18n';
 import { useDispatch } from 'react-redux';
 import { useEffect } from 'react';
 import { selectSection } from '@/redux/sectionsSlice';
@@ -10,6 +11,7 @@ import LogoutButton from '@/components/LogoutButton';
 import { redirect } from 'next/navigation';
 import { jwtVerify } from 'jose';
 import type { NextRequest } from 'next/server';
+import Header from '@/components/Header';
 
 function Home() {
   const dispatch = useDispatch();
@@ -28,16 +30,18 @@ function Home() {
   }, [dispatch]);
 
   return (
-    <main className="flex">
-      <section className="w-60 p-4 pb-6">
-        <LogoutButton />
-        <SectionsList />
-      </section>
-      <section className="flex-1">
-        <ActivityForm />
-        <ActivityRandomizer />
-      </section>
-    </main>
+    <>
+      <Header />
+      <main className="flex">
+        <section className="w-60 p-4 pb-6">
+          <SectionsList />
+        </section>
+        <section className="flex-1">
+          <ActivityForm />
+          <ActivityRandomizer />
+        </section>
+      </main>
+    </>
   );
 }
 

@@ -3,10 +3,12 @@ import { useDispatch } from 'react-redux';
 import { logout } from '../redux/authSlice';
 import Cookies from 'js-cookie';
 import { useRouter } from 'next/navigation';
+import { useTranslation } from 'react-i18next';
 
 const LogoutButton = () => {
   const router = useRouter();
   const dispatch = useDispatch();
+  const { t } = useTranslation();
 
   const handleLogout = () => {
     Cookies.remove('token');
@@ -14,7 +16,7 @@ const LogoutButton = () => {
     router.push('/login');
   };
 
-  return <button onClick={handleLogout}>Logout</button>;
+  return <button onClick={handleLogout}>{t('logout')}</button>;
 };
 
 export default LogoutButton;

@@ -1,9 +1,14 @@
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { RootState } from '../redux/store';
+import { useTranslation } from 'react-i18next';
+import styles from './ActivityRandomizer.module.css';
 
 const ActivityRandomizer = () => {
   const [randomActivity, setRandomActivity] = useState<string | null>(null);
+  const [activityAnimationState, setActivityAnimationState] =
+    useState('entered');
+  const [weightedRandom, setWeightedRandom] = useState(false);
   const selectedSection = useSelector(
     (state: RootState) => state.sections.selectedSection
   );
@@ -11,33 +16,63 @@ const ActivityRandomizer = () => {
   const selectedActivities = sections.find(
     (section) => section._id === selectedSection
   )?.activities;
+  const selectedSectionName = sections.find(
+    (section) => section._id === selectedSection
+  )?.name;
+  const { t } = useTranslation();
 
   const handleRandomize = () => {
+    setActivityAnimationState('entering');
+    setTimeout(() => setActivityAnimationState('entered'), 10);
+
     if (selectedActivities && selectedActivities.length > 0) {
-      const randomIndex = Math.floor(Math.random() * selectedActivities.length);
-      setRandomActivity(selectedActivities[randomIndex].name);
+      let randomIndex;
+      if (weightedRandom) {
+        const weightedList = selectedActivities.flatMap((activity, index) =>
+          Array.from(
+            { length: selectedActivities.length - index },
+            () => activity
+          )
+        );
+        randomIndex = Math.floor(Math.random() * weightedList.length);
+        setRandomActivity(weightedList[randomIndex].name);
+      } else {
+        randomIndex = Math.floor(Math.random() * selectedActivities.length);
+        setRandomActivity(selectedActivities[randomIndex].name);
+      }
     }
   };
 
   return (
-    <div className="p-4">
+    <div className={styles.randomizerContainer}>
       <button
-        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+        className={`${styles.randomizeButton} activity-form`}
         onClick={handleRandomize}
       >
-        Рандомайзер
+        {t('randomizer')}
       </button>
-      <div className="mt-4">
-        {selectedSection ? (
-          <div className="text-center">
-            <h3 className="text-lg font-semibold">Случайная активность:</h3>
-            <p className="text-xl">
-              {randomActivity || 'Нажмите кнопку для выбора'}
-            </p>
-          </div>
-        ) : (
-          <p className="text-center">Выберите раздел</p>
+      <div className={styles.randomActivityDisplay}>
+        <p className="text-lg font-semibold">
+          {selectedSectionName ? selectedSectionName : t('selectSection')}
+        </p>
+        {selectedSectionName && randomActivity && (
+          <p
+            className={`${styles.activityName} ${styles[activityAnimationState]}`}
+          >
+            {randomActivity}
+          </p>
         )}
+      </div>
+      <div className={styles.toggleWeightedRandom}>
+        <label>
+          <input
+            type="checkbox"
+            className="activity-form"
+            checked={weightedRandom}
+            onChange={(e) => setWeightedRandom(e.target.checked)}
+          />
+          {t('weightedRandom')}
+        </label>
       </div>
     </div>
   );
