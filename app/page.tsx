@@ -1,5 +1,5 @@
 'use client';
-import '../i18n';
+import '../utils/i18n';
 import { useDispatch } from 'react-redux';
 import { useEffect } from 'react';
 import { selectSection } from '@/redux/sectionsSlice';
@@ -7,7 +7,6 @@ import { withAuth } from '../components/withAuth';
 import ActivityForm from '../components/ActivityForm';
 import SectionsList from '../components/SectionsList';
 import ActivityRandomizer from '../components/ActivityRandomizer';
-import LogoutButton from '@/components/LogoutButton';
 import { redirect } from 'next/navigation';
 import { jwtVerify } from 'jose';
 import type { NextRequest } from 'next/server';
