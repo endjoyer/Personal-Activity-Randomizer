@@ -6,6 +6,8 @@ import Cookies from 'js-cookie';
 import { useRouter } from 'next/navigation';
 import { useDispatch } from 'react-redux';
 import { setToken, setUser } from '../../redux/authSlice';
+import { useTranslation } from 'react-i18next';
+import Header from '@/components/Header';
 
 const Login = () => {
   const [username, setUsername] = useState('');
@@ -16,6 +18,7 @@ const Login = () => {
   }>({});
   const router = useRouter();
   const dispatch = useDispatch();
+  const { t } = useTranslation();
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
@@ -41,36 +44,54 @@ const Login = () => {
   const validate = () => {
     let err: { username?: string; password?: string } = {};
     if (!username) {
-      err.username = 'Username is required';
+      err.username = t('usernameRequired');
     }
     if (!password) {
-      err.password = 'Password is required';
+      err.password = t('passwordRequired');
+    } else if (password.length < 8) {
+      err.password = t('passwordLengthError');
     }
     return err;
   };
 
   return (
-    <div className="container">
-      <h2>Login</h2>
-      <form onSubmit={handleSubmit}>
-        <input
-          type="text"
-          placeholder="Username"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
-        />
-        {errors.username && <p>{errors.username}</p>}
-        <input
-          type="password"
-          placeholder="Password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
-        {errors.password && <p>{errors.password}</p>}
-        <button type="submit">Login</button>
-      </form>
-      <Link href="/register">Don't have an account? Register</Link>
-    </div>
+    <>
+      <Header />
+      <div className="container">
+        <h2>{t('loginTitle')}</h2>
+        <form onSubmit={handleSubmit}>
+          <input
+            className="shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            type="text"
+            placeholder="Username"
+            value={username}
+            onChange={(e) => {
+              setUsername(e.target.value);
+              setErrors((prevErrors) => ({ ...prevErrors, username: '' }));
+            }}
+          />
+          <p className="text-red-500 text-xs italic">{errors.username}</p>
+          <input
+            className="shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            type="password"
+            placeholder="Password"
+            value={password}
+            onChange={(e) => {
+              setPassword(e.target.value);
+              setErrors((prevErrors) => ({ ...prevErrors, password: '' }));
+            }}
+          />
+          <p className="text-red-500 text-xs italic">{errors.password}</p>
+          <button
+            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+            type="submit"
+          >
+            {t('loginBtn')}
+          </button>
+        </form>
+        <Link href="/register">{t('notAccount')}</Link>
+      </div>
+    </>
   );
 };
 

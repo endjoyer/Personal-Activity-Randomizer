@@ -34,7 +34,7 @@ const Header = () => {
           RU
         </button>
       </div>
-      <LogoutButton />
+      {Cookies.get('token') && <LogoutButton />}
     </header>
   );
 };

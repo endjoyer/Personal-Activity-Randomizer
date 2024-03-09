@@ -1,5 +1,4 @@
 'use client';
-import '../utils/i18n';
 import { useDispatch } from 'react-redux';
 import { useEffect } from 'react';
 import { selectSection } from '@/redux/sectionsSlice';
