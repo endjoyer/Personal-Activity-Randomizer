@@ -1,6 +1,7 @@
 'use client';
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useTranslation } from 'react-i18next';
 import { AppDispatch, RootState } from '../redux/store';
 import { addNewSection, addNewActivity } from '../redux/sectionsSlice';
 
@@ -10,6 +11,7 @@ const ActivityForm = () => {
     (state: RootState) => state.sections.selectedSection
   );
   const dispatch = useDispatch<AppDispatch>();
+  const { t } = useTranslation();
 
   const handleAddClick = () => {
     if (input.trim() !== '') {
@@ -27,7 +29,7 @@ const ActivityForm = () => {
   return (
     <div className="activity-form p-4 flex flex-col gap-2">
       <h3 className="text-lg font-semibold">
-        {selectedSection ? 'Добавить активность' : 'Добавить раздел'}
+        {selectedSection ? t('addActivity') : t('addSection')}
       </h3>
       <div className="flex items-center gap-2">
         <input

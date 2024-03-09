@@ -1,7 +1,8 @@
 {
   "logout": "Logout",
   "randomizer": "Randomizer",
-  "randomActivity": "Random Activity:",
-  "selectSection": "Select a section",
-  "weightedRandom": "Weighted Random"
+  "selectSection": "Select section",
+  "weightedRandom": "Weighted Random",
+  "addActivity": "Add activity",
+  "addSection": "Add section"
 }

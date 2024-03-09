@@ -2,5 +2,7 @@
   "logout": "Выйти",
   "randomizer": "Рандомайзер",
   "selectSection": "Выберите раздел",
-  "weightedRandom": "Взвешенный рандом"
+  "weightedRandom": "Взвешенный рандом",
+  "addActivity": "Добавить активность",
+  "addSection": "Добавить раздел"
 }
