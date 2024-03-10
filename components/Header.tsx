@@ -1,40 +1,17 @@
 import React from 'react';
-import { useTranslation } from 'react-i18next';
+
 import Cookies from 'js-cookie';
 import LogoutButton from './LogoutButton';
+import Lang from './Lang';
 
 const Header = () => {
-  const { i18n } = useTranslation();
-
-  const changeLanguage = (language: string) => {
-    i18n.changeLanguage(language);
-    Cookies.set('i18next', language);
-  };
-
-  const currentLanguage = i18n.language;
-
   return (
     <header className="flex justify-between items-center p-4 bg-blue-500 text-white">
       <h1>Personal Activity Randomizer</h1>
-      <div>
-        <button
-          onClick={() => changeLanguage('en')}
-          className={`mr-2 ${
-            currentLanguage === 'en' ? 'underline' : 'text-blue-300'
-          }`}
-        >
-          EN
-        </button>
-        <button
-          onClick={() => changeLanguage('ru')}
-          className={`${
-            currentLanguage === 'ru' ? 'underline' : 'text-blue-300'
-          }`}
-        >
-          RU
-        </button>
+      <div className="flex gap-4">
+        {Cookies.get('token') && <LogoutButton />}
+        <Lang />
       </div>
-      {Cookies.get('token') && <LogoutButton />}
     </header>
   );
 };

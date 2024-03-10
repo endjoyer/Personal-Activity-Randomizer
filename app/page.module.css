@@ -1,0 +1,19 @@
+.main {
+  display: flex;
+}
+
+.sectionsContainer {
+  width: 400px;
+  padding: 20px 10px 30px;
+  height: calc(100vh - 56px);
+  overflow: auto;
+}
+
+.techContainer {
+  width: calc(100% - 400px);
+  margin: 0 auto;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}

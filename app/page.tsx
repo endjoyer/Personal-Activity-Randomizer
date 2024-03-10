@@ -10,6 +10,7 @@ import { redirect } from 'next/navigation';
 import { jwtVerify } from 'jose';
 import type { NextRequest } from 'next/server';
 import Header from '@/components/Header';
+import styles from './page.module.css';
 
 function Home() {
   const dispatch = useDispatch();
@@ -30,11 +31,11 @@ function Home() {
   return (
     <>
       <Header />
-      <main className="flex">
-        <section className="w-60 p-4 pb-6">
+      <main className={styles.main}>
+        <section className={styles.sectionsContainer}>
           <SectionsList />
         </section>
-        <section className="flex-1">
+        <section className={styles.techContainer}>
           <ActivityForm />
           <ActivityRandomizer />
         </section>

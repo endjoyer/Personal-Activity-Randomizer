@@ -66,8 +66,9 @@ const ActivityRandomizer = () => {
       <div className={styles.toggleWeightedRandom}>
         <label>
           <input
+            title="Вероятность выдачи активности увеличиваться от номера в списке"
             type="checkbox"
-            className="activity-form"
+            className="activity-form hover:cursor-pointer"
             checked={weightedRandom}
             onChange={(e) => setWeightedRandom(e.target.checked)}
           />

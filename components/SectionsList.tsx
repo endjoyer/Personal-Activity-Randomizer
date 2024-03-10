@@ -174,7 +174,7 @@ const SectionsList = () => {
                   handleSelectSection(section._id);
                   toggleSection(section._id);
                 }}
-                className={`flex p-4 justify-between items-center cursor-pointer${
+                className={`flex gap-4 p-4 justify-between items-center cursor-pointer${
                   section._id === selectedSectionId ? ' font-bold' : ''
                 }`}
               >
@@ -237,19 +237,20 @@ const SectionsList = () => {
                         >
                           {(provided, snapshot) => (
                             <div
-                              className={`flex justify-between items-center p-2 my-1 bg-gray-100 rounded first:mt-0 last:mb-0 ${
+                              className={`flex gap-2 p-2 my-1 bg-gray-100 rounded first:mt-0 last:mb-0 ${
                                 snapshot.isDragging ? 'shadow-lg' : ''
                               }`}
                               ref={provided.innerRef}
                               {...provided.draggableProps}
                               {...provided.dragHandleProps}
                             >
-                              {index + 1}. {activity.name}
+                              <span className="block">{index + 1}.</span>{' '}
+                              {activity.name}
                               <button
                                 onClick={(event) =>
                                   toggleActivityMenu(event, activity._id)
                                 }
-                                className="text-gray-500 hover:text-gray-700 p-1"
+                                className="text-gray-500 hover:text-gray-700 ml-auto pl-2 pr-2 h-fit"
                               >
                                 ⋮
                               </button>
