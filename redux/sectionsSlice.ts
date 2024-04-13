@@ -13,6 +13,7 @@ interface Activity {
 }
 
 interface SectionsState {
+  weightedRandom: any;
   sections: Section[];
   selectedSection: string | null;
   loading: boolean;
@@ -192,11 +193,17 @@ const sectionsSlice = createSlice({
         section.activities.splice(toIndex, 0, removed);
       }
     },
-    toggleRepeatActivities: (state) => {
-      state.repeatActivities = !state.repeatActivities;
-      if (!state.repeatActivities) {
-        state.usedActivities = [];
-      }
+    // toggleRepeatActivities: (state) => {
+    //   state.repeatActivities = !state.repeatActivities;
+    //   if (!state.repeatActivities) {
+    //     state.usedActivities = [];
+    //   }
+    // },
+    toggleRepeatActivities: (state, action: PayloadAction<boolean>) => {
+      state.repeatActivities = action.payload;
+    },
+    toggleWeightedRandom: (state, action: PayloadAction<boolean>) => {
+      state.weightedRandom = action.payload;
     },
     addUsedActivity: (state, action: PayloadAction<number>) => {
       state.usedActivities.push(action.payload);
@@ -280,6 +287,7 @@ const sectionsSlice = createSlice({
 
 export const {
   toggleRepeatActivities,
+  toggleWeightedRandom,
   addUsedActivity,
   resetUsedActivities,
   selectSection,

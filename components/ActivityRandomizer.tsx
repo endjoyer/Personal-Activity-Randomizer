@@ -7,13 +7,17 @@ import {
   addUsedActivity,
   resetUsedActivities,
   toggleRepeatActivities,
+  toggleWeightedRandom,
 } from '@/redux/sectionsSlice';
+import { loadState, saveState } from '@/utils/localStorageHelpers';
 
 const ActivityRandomizer = () => {
   const [randomActivity, setRandomActivity] = useState<string | null>(null);
   const [activityAnimationState, setActivityAnimationState] =
     useState('entered');
-  const [weightedRandom, setWeightedRandom] = useState(false);
+  const weightedRandom = useSelector(
+    (state: RootState) => state.sections.weightedRandom
+  );
   const usedActivities = useSelector(
     (state: RootState) => state.sections.usedActivities
   );
@@ -24,6 +28,7 @@ const ActivityRandomizer = () => {
     (state: RootState) => state.sections.selectedSection
   );
   const sections = useSelector((state: RootState) => state.sections.sections);
+
   const selectedActivities = sections.find(
     (section) => section._id === selectedSection
   )?.activities;
@@ -32,6 +37,30 @@ const ActivityRandomizer = () => {
   )?.name;
   const dispatch = useDispatch<AppDispatch>();
   const { t } = useTranslation();
+
+  // Загружаем состояние чекбоксов из localStorage при монтировании компонента
+  useEffect(() => {
+    const savedRepeatActivities = loadState('repeatActivities');
+    const savedWeightedRandom = loadState('weightedRandom');
+
+    if (savedRepeatActivities !== undefined) {
+      dispatch(toggleRepeatActivities(savedRepeatActivities));
+    }
+    if (savedWeightedRandom !== undefined) {
+      dispatch(toggleWeightedRandom(savedWeightedRandom));
+    }
+  }, [dispatch]);
+
+  // Обработчики для переключения чекбоксов и сохранения их состояния в localStorage
+  const handleToggleRepeatActivities = () => {
+    dispatch(toggleRepeatActivities(!repeatActivities));
+    saveState('repeatActivities', !repeatActivities);
+  };
+
+  const handleToggleWeightedRandom = () => {
+    dispatch(toggleWeightedRandom(!weightedRandom));
+    saveState('weightedRandom', !weightedRandom);
+  };
 
   const handleRandomize = () => {
     setActivityAnimationState('entering');
@@ -114,7 +143,7 @@ const ActivityRandomizer = () => {
             type="checkbox"
             className="activity-form hover:cursor-pointer"
             checked={weightedRandom}
-            onChange={(e) => setWeightedRandom(e.target.checked)}
+            onChange={handleToggleWeightedRandom}
           />
           {t('weightedRandom')}
         </label>
@@ -123,7 +152,7 @@ const ActivityRandomizer = () => {
             type="checkbox"
             className="activity-form hover:cursor-pointer"
             checked={!repeatActivities}
-            onChange={() => dispatch(toggleRepeatActivities())}
+            onChange={handleToggleRepeatActivities}
           />
           {t('excludeRepeatActivities')}
         </label>
