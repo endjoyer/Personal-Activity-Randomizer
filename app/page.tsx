@@ -7,6 +7,7 @@ import ActivityForm from '../components/ActivityForm';
 import SectionsList from '../components/SectionsList';
 import ActivityRandomizer from '../components/ActivityRandomizer';
 import Header from '@/components/Header';
+import HamburgerMenu from '@/components/HamburgerMenu';
 import styles from './page.module.css';
 
 function Home() {
@@ -28,6 +29,7 @@ function Home() {
   return (
     <>
       <Header />
+      <HamburgerMenu />
       <main className={styles.main}>
         <section className={styles.sectionsContainer}>
           <SectionsList />

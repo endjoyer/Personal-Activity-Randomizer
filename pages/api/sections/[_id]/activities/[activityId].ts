@@ -20,9 +20,8 @@ export default async function handler(
     return res.status(404).json({ message: 'Section not found' });
   }
 
-  const activityIndex = section.activities.findIndex(
-    (a: { _id: { equals: (arg0: string | string[] | undefined) => any } }) =>
-      a._id.equals(activityId)
+  const activityIndex = section.activities.findIndex((a) =>
+    a._id.equals(activityId)
   );
   if (activityIndex === -1) {
     return res.status(404).json({ message: 'Activity not found' });
