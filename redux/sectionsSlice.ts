@@ -16,12 +16,16 @@ interface SectionsState {
   sections: Section[];
   selectedSection: string | null;
   loading: boolean;
+  usedActivities: number[];
+  repeatActivities: boolean;
 }
 
 const initialState: SectionsState = {
   sections: [],
   selectedSection: null,
   loading: false,
+  usedActivities: [] as number[],
+  repeatActivities: false,
 };
 
 // Получение разделов
@@ -188,6 +192,18 @@ const sectionsSlice = createSlice({
         section.activities.splice(toIndex, 0, removed);
       }
     },
+    toggleRepeatActivities: (state) => {
+      state.repeatActivities = !state.repeatActivities;
+      if (!state.repeatActivities) {
+        state.usedActivities = [];
+      }
+    },
+    addUsedActivity: (state, action: PayloadAction<number>) => {
+      state.usedActivities.push(action.payload);
+    },
+    resetUsedActivities: (state) => {
+      state.usedActivities = [];
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -262,6 +278,12 @@ const sectionsSlice = createSlice({
   },
 });
 
-export const { selectSection, moveActivity } = sectionsSlice.actions;
+export const {
+  toggleRepeatActivities,
+  addUsedActivity,
+  resetUsedActivities,
+  selectSection,
+  moveActivity,
+} = sectionsSlice.actions;
 
 export default sectionsSlice.reducer;

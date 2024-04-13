@@ -13,5 +13,7 @@
   "loginTitle": "Login",
   "registerTitle": "Register",
   "notAccount": "Don't have an account? Register",
-  "haveAccount": "Already have an account? Login"
+  "haveAccount": "Already have an account? Login",
+  "excludeRepeatActivities": "Eliminate repetition of activities",
+  "weightedRandomTitle": "The probability of activity output increases from the number in the section list"
 }

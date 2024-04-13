@@ -49,7 +49,10 @@
 
 .toggleWeightedRandom {
   margin-top: 20px;
-  cursor: pointer;
+}
+
+.toggleWeightedRandom label {
+  display: block;
 }
 
 .toggleWeightedRandom input {
