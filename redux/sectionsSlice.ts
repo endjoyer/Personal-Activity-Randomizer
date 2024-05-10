@@ -13,7 +13,7 @@ interface Activity {
 }
 
 interface SectionsState {
-  weightedRandom: any;
+  weightedRandom: boolean;
   sections: Section[];
   selectedSection: string | null;
   loading: boolean;
@@ -27,6 +27,7 @@ const initialState: SectionsState = {
   loading: false,
   usedActivities: [] as number[],
   repeatActivities: false,
+  weightedRandom: false,
 };
 
 // Получение разделов
@@ -36,8 +37,8 @@ export const fetchSections = createAsyncThunk(
     try {
       const response = await axios.get('/api/sections');
       return response.data;
-    } catch (error) {
-      return rejectWithValue(error.response.data);
+    } catch (error: any) {
+      return rejectWithValue(error.response?.data);
     }
   }
 );
@@ -49,8 +50,8 @@ export const addNewSection = createAsyncThunk(
     try {
       const response = await axios.post('/api/sections', { name: sectionName });
       return response.data;
-    } catch (error) {
-      return rejectWithValue(error.response.data);
+    } catch (error: any) {
+      return rejectWithValue(error.response?.data);
     }
   }
 );
@@ -68,8 +69,8 @@ export const addNewActivity = createAsyncThunk(
         { name: activityName }
       );
       return response.data;
-    } catch (error) {
-      return rejectWithValue(error.response.data);
+    } catch (error: any) {
+      return rejectWithValue(error.response?.data);
     }
   }
 );
@@ -86,8 +87,8 @@ export const updateSection = createAsyncThunk(
         name: newName,
       });
       return response.data;
-    } catch (error) {
-      return rejectWithValue(error.response.data);
+    } catch (error: any) {
+      return rejectWithValue(error.response?.data);
     }
   }
 );
@@ -109,8 +110,8 @@ export const updateActivity = createAsyncThunk(
         { name: newName }
       );
       return response.data;
-    } catch (error) {
-      return rejectWithValue(error.response.data);
+    } catch (error: any) {
+      return rejectWithValue(error.response?.data);
     }
   }
 );
@@ -122,8 +123,8 @@ export const deleteSection = createAsyncThunk(
     try {
       await axios.delete(`/api/sections/${sectionId}`);
       return sectionId;
-    } catch (error) {
-      return rejectWithValue(error.response.data);
+    } catch (error: any) {
+      return rejectWithValue(error.response?.data);
     }
   }
 );
@@ -140,8 +141,8 @@ export const deleteActivity = createAsyncThunk(
         `/api/sections/${sectionId}/activities/${activityId}`
       );
       return { sectionId, activityId };
-    } catch (error) {
-      return rejectWithValue(error.response.data);
+    } catch (error: any) {
+      return rejectWithValue(error.response?.data);
     }
   }
 );
@@ -163,8 +164,8 @@ export const updateActivityOrder = createAsyncThunk(
         }
       );
       return response.data;
-    } catch (error) {
-      return rejectWithValue(error.response.data);
+    } catch (error: any) {
+      return rejectWithValue(error.response?.data);
     }
   }
 );
