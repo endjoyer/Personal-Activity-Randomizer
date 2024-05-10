@@ -1,0 +1,19 @@
+{
+  "logout": "Logout",
+  "randomizer": "Randomizer",
+  "selectSection": "Select section",
+  "weightedRandom": "Weighted Random",
+  "addActivity": "Add activity",
+  "addSection": "Add section",
+  "usernameRequired": "Username is required",
+  "passwordRequired": "Password is required",
+  "passwordLengthError": "Password must be at least 8 characters",
+  "loginBtn": "Login",
+  "registerBtn": "Register",
+  "loginTitle": "Login",
+  "registerTitle": "Register",
+  "notAccount": "Don't have an account? Register",
+  "haveAccount": "Already have an account? Login",
+  "excludeRepeatActivities": "Eliminate repetition of activities",
+  "weightedRandomTitle": "The probability of activity output increases from the number in the section list"
+}

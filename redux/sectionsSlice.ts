@@ -13,15 +13,21 @@ interface Activity {
 }
 
 interface SectionsState {
+  weightedRandom: boolean;
   sections: Section[];
   selectedSection: string | null;
   loading: boolean;
+  usedActivities: number[];
+  repeatActivities: boolean;
 }
 
 const initialState: SectionsState = {
   sections: [],
   selectedSection: null,
   loading: false,
+  usedActivities: [] as number[],
+  repeatActivities: false,
+  weightedRandom: false,
 };
 
 // Получение разделов
@@ -31,8 +37,8 @@ export const fetchSections = createAsyncThunk(
     try {
       const response = await axios.get('/api/sections');
       return response.data;
-    } catch (error) {
-      return rejectWithValue(error.response.data);
+    } catch (error: any) {
+      return rejectWithValue(error.response?.data);
     }
   }
 );
@@ -44,8 +50,8 @@ export const addNewSection = createAsyncThunk(
     try {
       const response = await axios.post('/api/sections', { name: sectionName });
       return response.data;
-    } catch (error) {
-      return rejectWithValue(error.response.data);
+    } catch (error: any) {
+      return rejectWithValue(error.response?.data);
     }
   }
 );
@@ -63,8 +69,8 @@ export const addNewActivity = createAsyncThunk(
         { name: activityName }
       );
       return response.data;
-    } catch (error) {
-      return rejectWithValue(error.response.data);
+    } catch (error: any) {
+      return rejectWithValue(error.response?.data);
     }
   }
 );
@@ -81,8 +87,8 @@ export const updateSection = createAsyncThunk(
         name: newName,
       });
       return response.data;
-    } catch (error) {
-      return rejectWithValue(error.response.data);
+    } catch (error: any) {
+      return rejectWithValue(error.response?.data);
     }
   }
 );
@@ -104,8 +110,8 @@ export const updateActivity = createAsyncThunk(
         { name: newName }
       );
       return response.data;
-    } catch (error) {
-      return rejectWithValue(error.response.data);
+    } catch (error: any) {
+      return rejectWithValue(error.response?.data);
     }
   }
 );
@@ -117,8 +123,8 @@ export const deleteSection = createAsyncThunk(
     try {
       await axios.delete(`/api/sections/${sectionId}`);
       return sectionId;
-    } catch (error) {
-      return rejectWithValue(error.response.data);
+    } catch (error: any) {
+      return rejectWithValue(error.response?.data);
     }
   }
 );
@@ -135,8 +141,8 @@ export const deleteActivity = createAsyncThunk(
         `/api/sections/${sectionId}/activities/${activityId}`
       );
       return { sectionId, activityId };
-    } catch (error) {
-      return rejectWithValue(error.response.data);
+    } catch (error: any) {
+      return rejectWithValue(error.response?.data);
     }
   }
 );
@@ -158,8 +164,8 @@ export const updateActivityOrder = createAsyncThunk(
         }
       );
       return response.data;
-    } catch (error) {
-      return rejectWithValue(error.response.data);
+    } catch (error: any) {
+      return rejectWithValue(error.response?.data);
     }
   }
 );
@@ -187,6 +193,24 @@ const sectionsSlice = createSlice({
         const [removed] = section.activities.splice(fromIndex, 1);
         section.activities.splice(toIndex, 0, removed);
       }
+    },
+    // toggleRepeatActivities: (state) => {
+    //   state.repeatActivities = !state.repeatActivities;
+    //   if (!state.repeatActivities) {
+    //     state.usedActivities = [];
+    //   }
+    // },
+    toggleRepeatActivities: (state, action: PayloadAction<boolean>) => {
+      state.repeatActivities = action.payload;
+    },
+    toggleWeightedRandom: (state, action: PayloadAction<boolean>) => {
+      state.weightedRandom = action.payload;
+    },
+    addUsedActivity: (state, action: PayloadAction<number>) => {
+      state.usedActivities.push(action.payload);
+    },
+    resetUsedActivities: (state) => {
+      state.usedActivities = [];
     },
   },
   extraReducers: (builder) => {
@@ -262,6 +286,13 @@ const sectionsSlice = createSlice({
   },
 });
 
-export const { selectSection, moveActivity } = sectionsSlice.actions;
+export const {
+  toggleRepeatActivities,
+  toggleWeightedRandom,
+  addUsedActivity,
+  resetUsedActivities,
+  selectSection,
+  moveActivity,
+} = sectionsSlice.actions;
 
 export default sectionsSlice.reducer;

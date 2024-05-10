@@ -1,0 +1,19 @@
+{
+  "logout": "Выйти",
+  "randomizer": "Рандомайзер",
+  "selectSection": "Выберите раздел",
+  "weightedRandom": "Взвешенный рандом",
+  "addActivity": "Добавить активность",
+  "addSection": "Добавить раздел",
+  "usernameRequired": "Имя пользователя обязательно",
+  "passwordRequired": "Пароль обязателен",
+  "passwordLengthError": "Пароль должен быть не менее 8 символов",
+  "loginBtn": "Войти",
+  "registerBtn": "Регистрация",
+  "loginTitle": "Авторизация",
+  "registerTitle": "Регистрация",
+  "notAccount": "У вас нет учетной записи? Зарегистрировать",
+  "haveAccount": "У вас уже есть учетная запись? Авторизоваться",
+  "excludeRepeatActivities": "Исключить повторение активностей",
+  "weightedRandomTitle": "Вероятность выдачи активности увеличиваться от номера в списке раздела"
+}

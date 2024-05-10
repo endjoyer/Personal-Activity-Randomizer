@@ -1,6 +1,7 @@
 'use client';
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useTranslation } from 'react-i18next';
 import { AppDispatch, RootState } from '../redux/store';
 import { addNewSection, addNewActivity } from '../redux/sectionsSlice';
 
@@ -10,6 +11,7 @@ const ActivityForm = () => {
     (state: RootState) => state.sections.selectedSection
   );
   const dispatch = useDispatch<AppDispatch>();
+  const { t } = useTranslation();
 
   const handleAddClick = () => {
     if (input.trim() !== '') {
@@ -25,9 +27,9 @@ const ActivityForm = () => {
   };
 
   return (
-    <div className="activity-form p-4 flex flex-col gap-2">
+    <div className="activity-form max-w-96 p-4 pb-10 flex flex-col gap-2">
       <h3 className="text-lg font-semibold">
-        {selectedSection ? 'Добавить активность' : 'Добавить раздел'}
+        {selectedSection ? t('addActivity') : t('addSection')}
       </h3>
       <div className="flex items-center gap-2">
         <input
@@ -37,7 +39,7 @@ const ActivityForm = () => {
           onKeyPress={(e) => e.key === 'Enter' && handleAddClick()}
         />
         <button
-          className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+          className="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded active:shadow-lg active:bg-green-500 focus:shadow-outline transition-all duration-300"
           type="button"
           onClick={handleAddClick}
         >

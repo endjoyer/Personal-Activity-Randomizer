@@ -20,7 +20,7 @@ export default async function handler(
     return res.status(404).json({ message: 'Section not found' });
   }
 
-  const activityIndex = section.activities.findIndex((a) =>
+  const activityIndex = section.activities.findIndex((a: any) =>
     a._id.equals(activityId)
   );
   if (activityIndex === -1) {
