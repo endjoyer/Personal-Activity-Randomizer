@@ -1,6 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import dbConnect from '../../../utils/dbConnect';
 import User from '../../../models/User';
+import jwt from 'jsonwebtoken';
 
 export default async function handler(
   req: NextApiRequest,
@@ -21,7 +22,14 @@ export default async function handler(
       });
 
       const newUser = await user.save();
-      res.status(201).json(newUser);
+
+      const token = jwt.sign(
+        { userId: newUser._id },
+        process.env.JWT_SECRET as string,
+        { expiresIn: '2w' }
+      );
+
+      res.status(201).json({ token, userId: newUser._id });
     } catch (error) {
       res.status(500).json({ message: 'Internal server error' });
     }
