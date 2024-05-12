@@ -56,40 +56,59 @@ const Login = () => {
 
   return (
     <>
-      <Header />
-      <div className="container">
-        <h2>{t('loginTitle')}</h2>
-        <form onSubmit={handleSubmit}>
-          <input
-            className="shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-            type="text"
-            placeholder="Username"
-            value={username}
-            onChange={(e) => {
-              setUsername(e.target.value);
-              setErrors((prevErrors) => ({ ...prevErrors, username: '' }));
-            }}
-          />
-          <p className="text-red-500 text-xs italic">{errors.username}</p>
-          <input
-            className="shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-            type="password"
-            placeholder="Password"
-            value={password}
-            onChange={(e) => {
-              setPassword(e.target.value);
-              setErrors((prevErrors) => ({ ...prevErrors, password: '' }));
-            }}
-          />
-          <p className="text-red-500 text-xs italic">{errors.password}</p>
-          <button
-            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-            type="submit"
-          >
-            {t('loginBtn')}
-          </button>
-        </form>
-        <Link href="/register">{t('notAccount')}</Link>
+      <Header isAuthPage={true} />
+      <div className="flex items-center justify-center min-h-screen bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-md w-full space-y-8">
+          <h2 className="text-center text-3xl font-extrabold text-gray-900">
+            {t('loginTitle')}
+          </h2>
+          <form className="mt-8" onSubmit={handleSubmit}>
+            <div>
+              <input
+                className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                type="text"
+                placeholder={t('username')}
+                value={username}
+                onChange={(e) => {
+                  setUsername(e.target.value);
+                  setErrors((prevErrors) => ({ ...prevErrors, username: '' }));
+                }}
+              />
+              <p className="text-red-500 text-xs italic h-6">
+                {errors.username}
+              </p>
+            </div>
+            <div>
+              <input
+                className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                type="password"
+                placeholder={t('password')}
+                value={password}
+                onChange={(e) => {
+                  setPassword(e.target.value);
+                  setErrors((prevErrors) => ({ ...prevErrors, password: '' }));
+                }}
+              />
+              <p className="text-red-500 text-xs italic h-6">
+                {errors.password}
+              </p>
+            </div>
+            <button
+              className="group relative w-full flex justify-center py-2 px-4 mt-6 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+              type="submit"
+            >
+              {t('loginBtn')}
+            </button>
+          </form>
+          <div className="text-sm text-center">
+            <Link
+              href="/register"
+              className="font-medium text-indigo-600 hover:text-indigo-500"
+            >
+              {t('notAccount')}
+            </Link>
+          </div>
+        </div>
       </div>
     </>
   );
