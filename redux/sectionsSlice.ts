@@ -19,6 +19,7 @@ interface SectionsState {
   loading: boolean;
   usedActivities: number[];
   repeatActivities: boolean;
+  isBulkAdd: boolean;
 }
 
 const initialState: SectionsState = {
@@ -28,6 +29,7 @@ const initialState: SectionsState = {
   usedActivities: [] as number[],
   repeatActivities: false,
   weightedRandom: false,
+  isBulkAdd: false,
 };
 
 // Получение разделов
@@ -194,12 +196,6 @@ const sectionsSlice = createSlice({
         section.activities.splice(toIndex, 0, removed);
       }
     },
-    // toggleRepeatActivities: (state) => {
-    //   state.repeatActivities = !state.repeatActivities;
-    //   if (!state.repeatActivities) {
-    //     state.usedActivities = [];
-    //   }
-    // },
     toggleRepeatActivities: (state, action: PayloadAction<boolean>) => {
       state.repeatActivities = action.payload;
     },
@@ -211,6 +207,13 @@ const sectionsSlice = createSlice({
     },
     resetUsedActivities: (state) => {
       state.usedActivities = [];
+      state.isBulkAdd = false;
+    },
+    toggleBulkAdd: (state) => {
+      state.isBulkAdd = !state.isBulkAdd;
+    },
+    setBulkAdd: (state, action: PayloadAction<boolean>) => {
+      state.isBulkAdd = action.payload;
     },
   },
   extraReducers: (builder) => {
@@ -293,6 +296,8 @@ export const {
   resetUsedActivities,
   selectSection,
   moveActivity,
+  toggleBulkAdd,
+  setBulkAdd,
 } = sectionsSlice.actions;
 
 export default sectionsSlice.reducer;

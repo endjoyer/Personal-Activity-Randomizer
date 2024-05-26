@@ -7,6 +7,7 @@ import {
   Draggable,
   DropResult,
 } from 'react-beautiful-dnd';
+import { useTranslation } from 'react-i18next';
 import { AppDispatch, RootState } from '../redux/store';
 import {
   selectSection,
@@ -17,6 +18,7 @@ import {
   updateActivity,
   deleteActivity,
   updateActivityOrder,
+  setBulkAdd,
 } from '../redux/sectionsSlice';
 import RenamePopup from './RenamePopup';
 import Loader from './Loader';
@@ -42,6 +44,8 @@ const SectionsList = () => {
   const menuRef = useRef<HTMLDivElement>(null);
   const renamePopupRef = useRef<HTMLDivElement>(null);
   const dispatch = useDispatch<AppDispatch>();
+
+  const { t } = useTranslation();
 
   const handleSelectSection = (sectionId: string) => {
     dispatch(selectSection(sectionId));
@@ -200,6 +204,12 @@ const SectionsList = () => {
                     <ul>
                       <li
                         className="p-2 hover:bg-gray-100 cursor-pointer"
+                        onClick={() => dispatch(setBulkAdd(true))}
+                      >
+                        {t('addList')}
+                      </li>
+                      <li
+                        className="p-2 hover:bg-gray-100 cursor-pointer"
                         onClick={(event) => {
                           handleRenameClick(
                             event,
@@ -209,13 +219,13 @@ const SectionsList = () => {
                           );
                         }}
                       >
-                        Переименовать
+                        {t('rename')}
                       </li>
                       <li
                         className="p-2 hover:bg-gray-100 cursor-pointer"
                         onClick={() => handleRemoveSection(section._id)}
                       >
-                        Удалить
+                        {t('delete')}
                       </li>
                     </ul>
                   </div>
@@ -272,7 +282,7 @@ const SectionsList = () => {
                                         setCurrentSectionId(section._id);
                                       }}
                                     >
-                                      Переименовать
+                                      {t('rename')}
                                     </li>
                                     <li
                                       className="p-2 hover:bg-gray-100 cursor-pointer"
@@ -283,7 +293,7 @@ const SectionsList = () => {
                                         )
                                       }
                                     >
-                                      Удалить
+                                      {t('delete')}
                                     </li>
                                   </ul>
                                 </div>
