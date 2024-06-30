@@ -1,26 +1,14 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { useDispatch } from 'react-redux';
 import Cookies from 'js-cookie';
-import { useRouter } from 'next/navigation';
 import { useTranslation } from 'react-i18next';
 import SectionsList from './SectionsList';
 import LogoutButton from './LogoutButton';
 import styles from './HamburgerMenu.module.css';
-import { logout } from '@/redux/authSlice';
 
 const HamburgerMenu = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const dispatch = useDispatch();
-  const router = useRouter();
   const { t, i18n } = useTranslation();
   const menuRef = useRef<HTMLDivElement>(null);
-
-  const handleLogout = () => {
-    Cookies.remove('token');
-    dispatch(logout());
-    router.push('/login');
-    closeMenu();
-  };
 
   const changeLanguage = (language: string) => {
     i18n.changeLanguage(language);
@@ -44,17 +32,11 @@ const HamburgerMenu = () => {
 
   return (
     <>
-      <div className={styles.hamburgerMenu} ref={menuRef}>
-        <input
-          className={styles.checkbox}
-          type="checkbox"
-          id="hamburger-menu-checkbox"
-          checked={isOpen}
-          onChange={() => setIsOpen(!isOpen)}
-        />
+      <div className={`${styles.hamburgerMenu} ${isOpen ? styles.open : ''}`} ref={menuRef}>
         <label
           htmlFor="hamburger-menu-checkbox"
           className={styles.hamburgerLines}
+          onClick={() => setIsOpen(!isOpen)}
         >
           <span className={`${styles.line} ${styles.line1}`}></span>
           <span className={`${styles.line} ${styles.line2}`}></span>
@@ -62,7 +44,8 @@ const HamburgerMenu = () => {
         </label>
         <div className={styles.menuItems}>
           <div className={styles.logo}>
-            <h1>{t('randomizer')}</h1>
+            <h1>PAR</h1>
+            <p className={styles.username}>{Cookies.get('username')}</p>
           </div>
           <div className={styles.logoutButton}>
             <LogoutButton />

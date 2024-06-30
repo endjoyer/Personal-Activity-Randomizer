@@ -31,7 +31,7 @@ export default async function handler(
         { userId: user._id },
         process.env.JWT_SECRET as string,
         {
-          expiresIn: '2w',
+          expiresIn: '4w',
         }
       );
 

@@ -178,14 +178,12 @@ const SectionsList = () => {
                   handleSelectSection(section._id);
                   toggleSection(section._id);
                 }}
-                className={`flex gap-4 p-4 justify-between items-center cursor-pointer${
-                  section._id === selectedSectionId ? ' font-bold' : ''
-                }`}
+                className={`flex gap-4 p-4 justify-between items-center cursor-pointer${section._id === selectedSectionId ? ' font-bold' : ''
+                  }`}
               >
                 <span
-                  className={`transform transition-transform ${
-                    expandedSections[section._id] ? 'rotate-90' : ''
-                  }`}
+                  className={`transform transition-transform ${expandedSections[section._id] ? 'rotate-90' : ''
+                    }`}
                 >
                   &#9654;
                 </span>
@@ -198,7 +196,7 @@ const SectionsList = () => {
                 </button>
                 {isMenuOpen[section._id] && (
                   <div
-                    className="origin-top-right absolute right-0 mt-28 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 z-10"
+                    className="origin-top-right absolute left-0 mt-40 w-full rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 z-10"
                     ref={menuRef}
                   >
                     <ul>
@@ -247,9 +245,8 @@ const SectionsList = () => {
                         >
                           {(provided, snapshot) => (
                             <div
-                              className={`flex gap-2 p-2 my-1 bg-gray-100 rounded first:mt-0 last:mb-0 ${
-                                snapshot.isDragging ? 'shadow-lg' : ''
-                              }`}
+                              className={`flex gap-2 p-2 my-1 bg-gray-100 rounded first:mt-0 last:mb-0 ${snapshot.isDragging ? 'shadow-lg' : ''
+                                }`}
                               ref={provided.innerRef}
                               {...provided.draggableProps}
                               {...provided.dragHandleProps}
@@ -316,11 +313,11 @@ const SectionsList = () => {
                 onSave={
                   isActivity
                     ? (newName) =>
-                        handleRenameActivity(
-                          currentSectionId,
-                          editingId,
-                          newName
-                        )
+                      handleRenameActivity(
+                        currentSectionId,
+                        editingId,
+                        newName
+                      )
                     : (newName) => handleRenameSection(editingId, newName)
                 }
                 onCancel={() => setEditingId(null)}

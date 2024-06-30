@@ -31,6 +31,7 @@ const Register = () => {
           password,
         });
         Cookies.set('token', res.data.token);
+        Cookies.set('username', username);
         dispatch(setToken(res.data.token));
         dispatch(setUser(username));
         router.push('/');

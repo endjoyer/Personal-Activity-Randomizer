@@ -1,18 +1,14 @@
 .hamburgerMenu {
   position: fixed;
   top: 0;
-  left: 0; /* Изначально меню скрыто */
+  left: -240px;
   height: 100%;
   z-index: 1000;
   transition: left 0.3s ease-in-out;
 }
 
-.hamburgerMenu input.checkbox {
-  display: none; /* Скрываем чекбокс */
-}
-
-.hamburgerMenu input.checkbox:checked ~ .menuItems {
-  left: 0; /* При активном чекбоксе меню показывается */
+.hamburgerMenu.open {
+  left: 0; /* Меню показывается, когда добавлен класс open */
 }
 
 .hamburgerLines {
@@ -20,7 +16,7 @@
   top: 15px;
   left: 15px;
   cursor: pointer;
-  z-index: 1001; /* Чтобы линии были над меню */
+  z-index: 1001;
   transition: all 0.2s ease-in-out;
 }
 
@@ -32,7 +28,6 @@
   display: block;
   width: 30px;
   height: 4px;
-
   margin-bottom: 6px;
   border-radius: 2px;
   background-color: #333;
@@ -69,7 +64,7 @@
   padding: 1rem;
   position: relative;
   top: 0;
-  left: -240px; /* Изначально содержимое меню скрыто */
+  left: 0;
   width: 240px;
   height: 100%;
   background-color: #fff;
@@ -83,6 +78,10 @@
   font-size: 18px;
   text-align: center;
   border-bottom: 1px solid #ddd;
+}
+
+.username {
+  margin: 1rem 0 0 0;
 }
 
 .logoutButton {

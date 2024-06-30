@@ -6,12 +6,13 @@ import Lang from './Lang';
 const Header = ({ isAuthPage }: { isAuthPage?: boolean }) => {
   return (
     <header
-      className={`sm:flex ${
-        isAuthPage ? 'flex' : 'hidden'
-      } justify-between items-center p-4 bg-blue-500 text-white`}
+      className={`sm:flex ${isAuthPage ? 'flex' : 'hidden'
+        } justify-between items-center p-4 bg-blue-500 text-white`}
     >
-      <h1>Personal Activity Randomizer</h1>
+      <h1>PAR</h1>
+      <p>{Cookies.get('username')}</p>
       <div className="flex gap-4">
+
         {Cookies.get('token') && <LogoutButton />}
         <Lang />
       </div>
