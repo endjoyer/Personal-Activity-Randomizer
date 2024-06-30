@@ -1,6 +1,5 @@
 {
   "logout": "Logout",
-  "randomizer": "Randomizer",
   "selectSection": "Select section",
   "weightedRandom": "Weighted Random",
   "addActivity": "Add activity",
@@ -20,5 +19,5 @@
   "weightedRandomTitle": "The probability of activity output increases from the number in the section list",
   "rename": "Rename",
   "delete": "Delete",
-  "addList": "Add list"
+  "addList": "Add a list"
 }
