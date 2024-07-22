@@ -7,10 +7,10 @@ const Header = ({ isAuthPage }: { isAuthPage?: boolean }) => {
   return (
     <header
       className={`sm:flex ${isAuthPage ? 'flex' : 'hidden'
-        } justify-between items-center p-4 bg-blue-500 text-white`}
+        } justify-between items-center p-4 bg-blue-500 text-white relative`}
     >
       <h1>PAR</h1>
-      <p>{Cookies.get('username')}</p>
+      <p className="absolute left-1/2 transform -translate-x-1/2">{Cookies.get('username')}</p>
       <div className="flex gap-4">
 
         {Cookies.get('token') && <LogoutButton />}
