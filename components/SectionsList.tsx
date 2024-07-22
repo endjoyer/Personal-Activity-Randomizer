@@ -192,7 +192,7 @@ const SectionsList = () => {
               >
                 &#9654;
               </span>
-              <span className="absolute left-1/2 transform -translate-x-1/2">{allActivitiesSection.name}</span>
+              <span className="absolute left-1/2 transform -translate-x-1/2 text-center">{allActivitiesSection.name}</span>
             </div>
             {expandedSections[allActivitiesSection._id] && (
               <div className={'p-4 pt-0'}>
@@ -227,7 +227,7 @@ const SectionsList = () => {
                 >
                   &#9654;
                 </span>
-                <span>{section.name}</span>
+                <span className="text-center">{section.name}</span>
                 <button
                   onClick={(event) => toggleSectionMenu(event, section._id)}
                   className="text-gray-500 hover:text-gray-700 p-1"
