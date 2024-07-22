@@ -19,5 +19,6 @@
   "weightedRandomTitle": "The probability of activity output increases from the number in the section list",
   "rename": "Rename",
   "delete": "Delete",
-  "addList": "Add a list"
+  "addList": "Add a list",
+  "allActivities": "All activities"
 }

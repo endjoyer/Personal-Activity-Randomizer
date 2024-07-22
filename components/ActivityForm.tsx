@@ -14,7 +14,11 @@ const ActivityForm = () => {
   const dispatch = useDispatch<AppDispatch>();
   const { t } = useTranslation();
 
-  const handleAddClick = () => {
+  const dispatchActivity = async (sectionId: string, activityName: string) => {
+    await dispatch(addNewActivity({ sectionId, activityName })).unwrap();
+  };
+
+  const handleAddClick = async () => {
     if (input.trim() !== '') {
       if (selectedSection) {
         if (isBulkAdd) {
@@ -23,18 +27,11 @@ const ActivityForm = () => {
             .map((line) => line.replace(/^\s*\d*[-. ]?\s*/, '').trim()) // Удаляем числа и символы в начале строки
             .filter((line) => line.length > 0 && !line.match(/^[-. ]+$/)); // Игнорируем строки, состоящие только из символов пунктуации
 
-          activities.forEach((activity) => {
-            dispatch(
-              addNewActivity({
-                sectionId: selectedSection,
-                activityName: activity,
-              })
-            );
-          });
+          for (const activity of activities) {
+            await dispatchActivity(selectedSection, activity);
+          }
         } else {
-          dispatch(
-            addNewActivity({ sectionId: selectedSection, activityName: input })
-          );
+          await dispatchActivity(selectedSection, input);
         }
       } else {
         dispatch(addNewSection(input));
@@ -55,7 +52,7 @@ const ActivityForm = () => {
       <div className="flex items-center gap-2">
         {isBulkAdd ? (
           <textarea
-            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight resize focus:outline-none focus:shadow-outline"
+            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight resize focus:outline-none focus:shadow-outline w-72 h-80"
             value={input}
             onChange={(e) => setInput(e.target.value)}
             onKeyPress={(e) => e.key === 'Enter' && handleAddClick()}
