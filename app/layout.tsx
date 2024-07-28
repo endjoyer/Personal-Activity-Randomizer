@@ -1,9 +1,9 @@
 import './styles/globals.css';
 import type { Metadata } from 'next';
-import { Alegreya } from 'next/font/google';
+import { Varela } from 'next/font/google';
 import ReduxProvider from '@/app/ReduxProvider';
 
-const alegreya = Alegreya({ subsets: ['latin'], weight: ['500'] });
+const varela = Varela({ subsets: ['latin'], weight: ['400'] });
 
 export const metadata: Metadata = {
   title: 'Personal Activity Randomizer',
@@ -17,7 +17,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={alegreya.className}>
+      <body className={varela.className}>
         <ReduxProvider>{children}</ReduxProvider>
       </body>
     </html>

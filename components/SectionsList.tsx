@@ -176,7 +176,7 @@ const SectionsList = () => {
         <DragDropContext onDragEnd={onDragEnd}>
           <div
             key={allActivitiesSection._id}
-            className="bg-white shadow rounded mb-2 relative activity-form"
+            className="bg-white shadow rounded mb-2 relative"
           >
             <div
               onClick={() => {
