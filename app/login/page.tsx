@@ -37,7 +37,7 @@ const Login = () => {
         router.push('/');
       } catch (err) {
         console.error(err);
-        setErrors({ ...errs, password: 'Invalid username or password' });
+        setErrors({ ...errs, password: t('passwordInvalid') });
       }
     }
   };

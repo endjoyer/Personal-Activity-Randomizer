@@ -9,6 +9,8 @@
   "usernameRequired": "Username is required",
   "passwordRequired": "Password is required",
   "passwordLengthError": "Password must be at least 8 characters",
+  "passwordInvalid": "Invalid username or password",
+  "usernameTaken": "Username is already taken",
   "loginBtn": "Login",
   "registerBtn": "Register",
   "loginTitle": "Login",
