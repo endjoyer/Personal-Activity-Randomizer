@@ -1,5 +1,7 @@
+import { ISection } from '@/models/Section';
 import { createSlice, PayloadAction, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
+import mongoose from 'mongoose';
 
 interface Section {
   _id: string;
@@ -22,8 +24,19 @@ interface SectionsState {
   isBulkAdd: boolean;
 }
 
+const createAllActivitiesSection = (sections: ISection[]) => {
+  console.log(sections);
+  const allActivities = sections.flatMap((section) => section.activities);
+  return {
+    _id: 'all-activities',
+    name: 'Все активности',
+    user: null,
+    activities: allActivities,
+  };
+};
+
 const initialState: SectionsState = {
-  sections: [],
+  sections: [createAllActivitiesSection([])],
   selectedSection: null,
   loading: false,
   usedActivities: [] as number[],
@@ -38,7 +51,9 @@ export const fetchSections = createAsyncThunk(
   async (_, { getState, rejectWithValue }) => {
     try {
       const response = await axios.get('/api/sections');
-      return response.data;
+      const sections: ISection[] = response.data;
+      const allActivitiesSection = createAllActivitiesSection(sections);
+      return [...sections, allActivitiesSection];
     } catch (error: any) {
       return rejectWithValue(error.response?.data);
     }

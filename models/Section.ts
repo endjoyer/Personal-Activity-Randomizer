@@ -6,6 +6,7 @@ export interface IActivity {
 }
 
 export interface ISection extends Document {
+  _id: string;
   user: mongoose.Schema.Types.ObjectId;
   name: string;
   activities: IActivity[];

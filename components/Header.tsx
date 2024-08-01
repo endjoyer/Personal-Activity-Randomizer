@@ -9,7 +9,7 @@ const Header = ({ isAuthPage }: { isAuthPage?: boolean }) => {
   return (
     <header
       className={`sm:flex ${isAuthPage ? 'flex' : 'hidden'
-        } justify-between items-center p-2 relative font-medium shadow-lg`}
+        } justify-between items-center p-2 px-5 relative font-medium shadow-lg`}
     >
       <div className="flex items-center gap-3">
         <Image src={parIcon} alt="Personal Activity Randomizer Icon" width={40} />

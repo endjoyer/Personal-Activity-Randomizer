@@ -137,7 +137,7 @@ const ActivityRandomizer = () => {
         )}
       </div>
       <div className={styles.toggleWeightedRandom}>
-        <label>
+        <label className='max-w-fit' title={t('weightedRandomTitle')}>
           <input
             title={t('weightedRandomTitle')}
             type="checkbox"
