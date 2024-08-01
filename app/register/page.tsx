@@ -37,7 +37,7 @@ const Register = () => {
         router.push('/');
       } catch (err) {
         console.error(err);
-        setErrors({ ...errs, username: 'Username is already taken' });
+        setErrors({ ...errs, username: t('usernameTaken') });
       }
     }
   };

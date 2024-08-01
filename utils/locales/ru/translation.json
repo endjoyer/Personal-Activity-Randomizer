@@ -9,6 +9,8 @@
   "usernameRequired": "Имя пользователя обязательно",
   "passwordRequired": "Пароль обязателен",
   "passwordLengthError": "Пароль должен быть не менее 8 символов",
+  "passwordInvalid": "Неверное имя пользователя или пароль",
+  "usernameTaken": "Имя пользователя уже занято",
   "loginBtn": "Войти",
   "registerBtn": "Регистрация",
   "loginTitle": "Авторизация",

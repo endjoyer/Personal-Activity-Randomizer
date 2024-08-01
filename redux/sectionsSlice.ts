@@ -1,7 +1,7 @@
 import { ISection } from '@/models/Section';
 import { createSlice, PayloadAction, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
-import mongoose from 'mongoose';
+import { t } from 'i18next';
 
 interface Section {
   _id: string;
@@ -25,11 +25,10 @@ interface SectionsState {
 }
 
 const createAllActivitiesSection = (sections: ISection[]) => {
-  console.log(sections);
   const allActivities = sections.flatMap((section) => section.activities);
   return {
     _id: 'all-activities',
-    name: 'Все активности',
+    name: t('allActivities'),
     user: null,
     activities: allActivities,
   };
@@ -53,7 +52,7 @@ export const fetchSections = createAsyncThunk(
       const response = await axios.get('/api/sections');
       const sections: ISection[] = response.data;
       const allActivitiesSection = createAllActivitiesSection(sections);
-      return [...sections, allActivitiesSection];
+      return [allActivitiesSection, ...sections];
     } catch (error: any) {
       return rejectWithValue(error.response?.data);
     }

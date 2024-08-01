@@ -47,12 +47,6 @@ const SectionsList = () => {
 
   const { t } = useTranslation();
 
-  const allActivitiesSection = {
-    _id: 'all-activities',
-    name: t('allActivities'),
-    activities: sections.flatMap(section => section.activities),
-  };
-
   const handleSelectSection = (sectionId: string) => {
     dispatch(selectSection(sectionId));
   };
@@ -174,40 +168,6 @@ const SectionsList = () => {
         <Loader />
       ) : (
         <DragDropContext onDragEnd={onDragEnd}>
-          <div
-            key={allActivitiesSection._id}
-            className="bg-white shadow rounded mb-2 relative activity-form"
-          >
-            <div
-              onClick={() => {
-                handleSelectSection(allActivitiesSection._id);
-                toggleSection(allActivitiesSection._id);
-              }}
-              className={`flex gap-4 p-4 justify-between items-center cursor-pointer${allActivitiesSection._id === selectedSectionId ? ' font-bold' : ''
-                }`}
-            >
-              <span
-                className={`transform transition-transform relative ${expandedSections[allActivitiesSection._id] ? 'rotate-90' : ''
-                  }`}
-              >
-                &#9654;
-              </span>
-              <span className="absolute left-1/2 transform -translate-x-1/2 text-center">{allActivitiesSection.name}</span>
-            </div>
-            {expandedSections[allActivitiesSection._id] && (
-              <div className={'p-4 pt-0'}>
-                {allActivitiesSection.activities.map((activity, index) => (
-                  <div
-                    key={activity._id}
-                    className={`flex gap-2 p-2 my-1 bg-gray-100 rounded first:mt-0 last:mb-0`}
-                  >
-                    <span className="block">{index + 1}.</span>{' '}
-                    {activity.name}
-                  </div>
-                ))}
-              </div>
-            )}
-          </div>
           {sections.map((section) => (
             <div
               key={section._id}
@@ -227,13 +187,13 @@ const SectionsList = () => {
                 >
                   &#9654;
                 </span>
-                <span className="text-center">{section.name}</span>
-                <button
+                <span className="absolute left-1/2 transform -translate-x-1/2 text-center">{section.name}</span>
+                {section._id !== 'all-activities' && (<button
                   onClick={(event) => toggleSectionMenu(event, section._id)}
                   className="text-gray-500 hover:text-gray-700 p-1"
                 >
                   ⋮
-                </button>
+                </button>)}
                 {isMenuOpen[section._id] && (
                   <div
                     className="origin-top-right absolute left-0 mt-40 w-full rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 z-10"
