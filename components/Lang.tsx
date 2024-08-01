@@ -16,17 +16,15 @@ const Lang = () => {
     <div>
       <button
         onClick={() => changeLanguage('en')}
-        className={`mr-2 ${
-          currentLanguage === 'en' ? 'underline' : 'text-blue-300'
-        }`}
+        className={`mr-2 ${currentLanguage === 'en' ? 'underline' : 'opacity-75'
+          }`}
       >
         EN
       </button>
       <button
         onClick={() => changeLanguage('ru')}
-        className={`${
-          currentLanguage === 'ru' ? 'underline' : 'text-blue-300'
-        }`}
+        className={`${currentLanguage === 'ru' ? 'underline' : 'opacity-75'
+          }`}
       >
         RU
       </button>

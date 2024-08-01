@@ -15,12 +15,14 @@ const ActivityForm = () => {
   const { t } = useTranslation();
 
   const dispatchActivity = async (sectionId: string, activityName: string) => {
+    if (sectionId === "all-activities") return;
     await dispatch(addNewActivity({ sectionId, activityName })).unwrap();
   };
 
   const handleAddClick = async () => {
     if (input.trim() !== '') {
       if (selectedSection) {
+        if (selectedSection === "all-activities") return;
         if (isBulkAdd) {
           const activities = input
             .split('\n')
