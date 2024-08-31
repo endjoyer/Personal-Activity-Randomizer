@@ -82,7 +82,7 @@ const SectionsList = () => {
     isActivity: boolean
   ) => {
     const rect = event.currentTarget.getBoundingClientRect();
-    const top = rect.bottom - 50 + window.scrollY;
+    const top = rect.bottom - 130 + window.scrollY;
     const left = rect.left + window.scrollX;
     setEditingId(id);
     setCurrentName(name);
@@ -196,7 +196,7 @@ const SectionsList = () => {
                 </button>)}
                 {isMenuOpen[section._id] && (
                   <div
-                    className="origin-top-right absolute left-0 mt-40 w-full rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 z-10"
+                    className="origin-top-right absolute right-0 mt-40 mr-2 w-48 w-full rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 z-10"
                     ref={menuRef}
                   >
                     <ul>
@@ -253,17 +253,17 @@ const SectionsList = () => {
                             >
                               <span className="block">{index + 1}.</span>{' '}
                               {activity.name}
-                              <button
+                              {section._id !== 'all-activities' && (<button
                                 onClick={(event) =>
                                   toggleActivityMenu(event, activity._id)
                                 }
                                 className="text-gray-500 hover:text-gray-700 ml-auto pl-2 pr-2 h-fit"
                               >
                                 ⋮
-                              </button>
+                              </button>)}
                               {isMenuOpen[activity._id] && (
                                 <div
-                                  className="origin-top-right absolute right-0 mt-28 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 z-10"
+                                  className="origin-top-right absolute right-0 mt-8 mr-4 w-48 w-full rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 z-10"
                                   ref={menuRef}
                                 >
                                   <ul>

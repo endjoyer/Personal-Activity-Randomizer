@@ -35,7 +35,7 @@ const HamburgerMenu = () => {
       <div className={`${styles.hamburgerMenu} ${isOpen ? styles.open : ''}`} ref={menuRef}>
         <label
           htmlFor="hamburger-menu-checkbox"
-          className={styles.hamburgerLines}
+          className={`activity-form ${styles.hamburgerLines}`}
           onClick={() => setIsOpen(!isOpen)}
         >
           <span className={`${styles.line} ${styles.line1}`}></span>
