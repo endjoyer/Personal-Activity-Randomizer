@@ -23,5 +23,7 @@
   "delete": "Удалить",
   "addList": "Добавить списком",
   "allActivities": "Все активности",
-  "randomizer": "Рандомизировать"
+  "randomizer": "Рандомизировать",
+  "activityCopied": "Активность скопирована",
+  "activityCopyHint": "Скопировать активность"
 }

@@ -13,7 +13,7 @@ const Lang = () => {
   const currentLanguage = i18n.language;
 
   return (
-    <div>
+    <div className='activity-form'>
       <button
         onClick={() => changeLanguage('en')}
         className={`mr-2 ${currentLanguage === 'en' ? 'underline' : 'opacity-75'
