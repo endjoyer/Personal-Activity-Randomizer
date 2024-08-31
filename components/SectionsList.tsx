@@ -172,31 +172,33 @@ const SectionsList = () => {
             <div
               key={section._id}
               className="bg-white shadow rounded mb-2 relative activity-form"
+              onClick={() => {
+                handleSelectSection(section._id);
+              }}
             >
               <div
-                onClick={() => {
-                  handleSelectSection(section._id);
-                  toggleSection(section._id);
-                }}
-                className={`flex gap-4 p-4 justify-between items-center cursor-pointer${section._id === selectedSectionId ? ' font-bold' : ''
+                className={`flex gap-4 p-4 pr-3 pl-3 justify-between items-center${section._id === selectedSectionId ? ' font-bold' : ''
                   }`}
               >
                 <span
-                  className={`transform transition-transform ${expandedSections[section._id] ? 'rotate-90' : ''
+                  className={`p-1 pr-2 pl-2 transform transition-transform cursor-pointer ${expandedSections[section._id] ? 'rotate-90' : ''
                     }`}
+                  onClick={() => {
+                    toggleSection(section._id);
+                  }}
                 >
                   &#9654;
                 </span>
-                <span className="absolute left-1/2 transform -translate-x-1/2 text-center">{section.name}</span>
+                <span className={`text-center ${section._id === 'all-activities' ? 'absolute left-1/2 transform -translate-x-1/2' : ''}`}>{section.name}</span>
                 {section._id !== 'all-activities' && (<button
                   onClick={(event) => toggleSectionMenu(event, section._id)}
-                  className="text-gray-500 hover:text-gray-700 p-1"
+                  className="text-gray-500 hover:text-gray-700 p-1 pr-2 pl-2"
                 >
                   ⋮
                 </button>)}
                 {isMenuOpen[section._id] && (
                   <div
-                    className="origin-top-right absolute right-0 mt-40 mr-2 w-48 w-full rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 z-10"
+                    className="origin-top-right absolute right-0 mt-40 mr-2 w-48 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 z-10"
                     ref={menuRef}
                   >
                     <ul>
@@ -263,7 +265,7 @@ const SectionsList = () => {
                               </button>)}
                               {isMenuOpen[activity._id] && (
                                 <div
-                                  className="origin-top-right absolute right-0 mt-8 mr-4 w-48 w-full rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 z-10"
+                                  className="origin-top-right absolute right-0 mt-8 mr-4 w-48 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 z-10"
                                   ref={menuRef}
                                 >
                                   <ul>
