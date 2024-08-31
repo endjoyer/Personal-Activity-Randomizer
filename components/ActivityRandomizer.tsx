@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '../redux/store';
 import { useTranslation } from 'react-i18next';
 import styles from './ActivityRandomizer.module.css';
+import NotificationPopup from './NotificationPopup';
 import {
   addUsedActivity,
   resetUsedActivities,
@@ -15,6 +16,7 @@ const ActivityRandomizer = () => {
   const [randomActivity, setRandomActivity] = useState<string | null>(null);
   const [activityAnimationState, setActivityAnimationState] =
     useState('entered');
+  const [notificationVisible, setNotificationVisible] = useState(false);
   const weightedRandom = useSelector(
     (state: RootState) => state.sections.weightedRandom
   );
@@ -111,6 +113,14 @@ const ActivityRandomizer = () => {
     }
   };
 
+  const handleCopyToClipboard = () => {
+    if (randomActivity) {
+      navigator.clipboard.writeText(randomActivity);
+      setNotificationVisible(true);
+      setTimeout(() => setNotificationVisible(false), 1000);
+    }
+  };
+
   // Эффект для сброса списка использованных активностей при смене раздела
   useEffect(() => {
     dispatch(resetUsedActivities());
@@ -130,7 +140,9 @@ const ActivityRandomizer = () => {
         </p>
         {selectedSectionName && randomActivity && (
           <p
-            className={`${styles.activityName} ${styles[activityAnimationState]}`}
+            title={t('activityCopyHint')}
+            className={`activity-form ${styles.activityName} ${styles[activityAnimationState]}`}
+            onClick={handleCopyToClipboard}
           >
             {randomActivity}
           </p>
@@ -157,6 +169,7 @@ const ActivityRandomizer = () => {
           {t('excludeRepeatActivities')}
         </label>
       </div>
+      <NotificationPopup message={t('activityCopied')} visible={notificationVisible} />
     </div>
   );
 };

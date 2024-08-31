@@ -23,5 +23,7 @@
   "delete": "Delete",
   "addList": "Add a list",
   "allActivities": "All activities",
-  "randomizer": "Randomize"
+  "randomizer": "Randomize",
+  "activityCopied": "Activity copied",
+  "activityCopyHint": "Activity copy"
 }
