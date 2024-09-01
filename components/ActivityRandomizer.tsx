@@ -127,7 +127,7 @@ const ActivityRandomizer = () => {
   }, [selectedSection, dispatch]);
 
   return (
-    <div className={styles.randomizerContainer}>
+    <div className={`sm:p-10 sm:pt-5 ${styles.randomizerContainer}`}>
       <button
         className={`${styles.randomizeButton} activity-form`}
         onClick={handleRandomize}

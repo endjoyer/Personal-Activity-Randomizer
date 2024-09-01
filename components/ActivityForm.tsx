@@ -43,7 +43,7 @@ const ActivityForm = () => {
   };
 
   return (
-    <div className="activity-form max-w-full p-10 pt-5 flex flex-col gap-2">
+    <div className="activity-form max-w-full pt-3 pb-10 flex items-center flex-col gap-2 sm:p-10 sm:pt-5">
       <h3 className="text-lg font-semibold">
         {selectedSection
           ? isBulkAdd
