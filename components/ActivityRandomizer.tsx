@@ -11,12 +11,15 @@ import {
   toggleWeightedRandom,
 } from '@/redux/sectionsSlice';
 import { loadState, saveState } from '@/utils/localStorageHelpers';
+import { Button } from '@nextui-org/button';
 
 const ActivityRandomizer = () => {
   const [randomActivity, setRandomActivity] = useState<string | null>(null);
   const [activityAnimationState, setActivityAnimationState] =
     useState('entered');
   const [notificationVisible, setNotificationVisible] = useState(false);
+  const [isClicked, setIsClicked] = useState(false);
+
   const weightedRandom = useSelector(
     (state: RootState) => state.sections.weightedRandom
   );
@@ -128,12 +131,18 @@ const ActivityRandomizer = () => {
 
   return (
     <div className={`sm:p-10 sm:pt-5 ${styles.randomizerContainer}`}>
-      <button
-        className={`${styles.randomizeButton} activity-form`}
-        onClick={handleRandomize}
+      <Button
+        type="button"
+        className={`activity-form bg-gradient-to-tl from-pink-500 to-yellow-500  text-white shadow-lg text-white font-bold rounded transition-transform duration-300 transform focus:outline-none ${isClicked ? 'scale-90' : ''
+          } hover:opacity-90`}
+        onClick={() => {
+          handleRandomize();
+          setIsClicked(true);
+          setTimeout(() => setIsClicked(false), 300);
+        }}
       >
         {t('randomizer')}
-      </button>
+      </Button>
       <div className={styles.randomActivityDisplay}>
         <p className="text-lg font-semibold">
           {selectedSectionName ? selectedSectionName : t('selectSection')}

@@ -33,15 +33,14 @@ const HamburgerMenu = () => {
   return (
     <>
       <div className={`${styles.hamburgerMenu} ${isOpen ? styles.open : ''}`} ref={menuRef}>
-        <label
-          htmlFor="hamburger-menu-checkbox"
+        <div
           className={`activity-form ${styles.hamburgerLines}`}
           onClick={() => setIsOpen(!isOpen)}
         >
-          <span className={`${styles.line} ${styles.line1}`}></span>
-          <span className={`${styles.line} ${styles.line2}`}></span>
-          <span className={`${styles.line} ${styles.line3}`}></span>
-        </label>
+          <span className={`${styles.line} ${isOpen ? styles.line1Open : ''}`}></span>
+          <span className={`${styles.line} ${isOpen ? styles.line2Open : ''}`}></span>
+          <span className={`${styles.line} ${isOpen ? styles.line3Open : ''}`}></span>
+        </div>
         <div className={styles.menuItems}>
           <div className={styles.logo}>
             <h1>PAR</h1>

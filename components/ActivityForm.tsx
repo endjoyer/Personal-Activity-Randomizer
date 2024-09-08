@@ -2,11 +2,13 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
+import { Button } from "@nextui-org/button";
 import { AppDispatch, RootState } from '../redux/store';
 import { addNewSection, addNewActivity } from '../redux/sectionsSlice';
 
 const ActivityForm = () => {
   const [input, setInput] = useState('');
+  const [isClicked, setIsClicked] = useState(false);
   const isBulkAdd = useSelector((state: RootState) => state.sections.isBulkAdd);
   const selectedSection = useSelector(
     (state: RootState) => state.sections.selectedSection
@@ -51,10 +53,10 @@ const ActivityForm = () => {
             : t('addActivity')
           : t('addSection')}
       </h3>
-      <div className="flex items-center gap-2">
+      <div className="flex flex-col items-center gap-4 mobil:gap-2 mobil:flex-row">
         {isBulkAdd ? (
           <textarea
-            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight resize focus:outline-none focus:shadow-outline w-72 h-80"
+            className="shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight resize focus:outline-none focus:shadow-outline w-72 h-80"
             value={input}
             onChange={(e) => setInput(e.target.value)}
             onKeyPress={(e) => e.key === 'Enter' && handleAddClick()}
@@ -67,13 +69,18 @@ const ActivityForm = () => {
             onKeyPress={(e) => e.key === 'Enter' && handleAddClick()}
           />
         )}
-        <button
-          className="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded active:shadow-lg active:bg-green-500 focus:shadow-outline transition-all duration-300"
+        <Button
+          className={`bg-gradient-to-tr from-green-500 to-blue-400 text-white shadow-lg hover:opacity-90 min-w-28 text-white font-bold py-2 px-4 rounded transition-transform duration-300 focus:outline-none ${isClicked ? 'scale-90' : ''
+            }`}
           type="button"
-          onClick={handleAddClick}
+          onClick={() => {
+            handleAddClick();
+            setIsClicked(true);
+            setTimeout(() => setIsClicked(false), 300);
+          }}
         >
           {t('add')}
-        </button>
+        </Button>
       </div>
     </div>
   );

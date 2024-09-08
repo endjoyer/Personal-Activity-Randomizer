@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@nextui-org/button": "^2.0.37",
     "@reduxjs/toolkit": "^1.9.7",
     "axios": "^1.6.7",
     "bcryptjs": "^2.4.3",

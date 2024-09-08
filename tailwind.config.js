@@ -8,11 +8,11 @@ module.exports = {
 
   theme: {
     screens: {
+      mobil: '500px',
+      // => @media (min-width: 500px) { ... }
+
       sm: '840px',
       // => @media (min-width: 840px) { ... }
-
-      md: '768px',
-      // => @media (min-width: 768px) { ... }
 
       lg: '1024px',
       // => @media (min-width: 1024px) { ... }

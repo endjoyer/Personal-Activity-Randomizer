@@ -189,7 +189,12 @@ const SectionsList = () => {
                 >
                   &#9654;
                 </span>
-                <span className={`text-center ${section._id === 'all-activities' ? 'absolute left-1/2 transform -translate-x-1/2' : ''}`}>{section.name}</span>
+                <span
+                  className={`text-center break-words overflow-hidden ${section._id === 'all-activities' ? 'absolute left-1/2 transform -translate-x-1/2' : ''}`}
+                  title={section.name}
+                >
+                  {section.name}
+                </span>
                 {section._id !== 'all-activities' && (<button
                   onClick={(event) => toggleSectionMenu(event, section._id)}
                   className="text-gray-500 hover:text-gray-700 p-1 pr-2 pl-2"
@@ -204,7 +209,10 @@ const SectionsList = () => {
                     <ul>
                       <li
                         className="p-2 hover:bg-gray-100 cursor-pointer"
-                        onClick={() => dispatch(setBulkAdd(true))}
+                        onClick={(event) => {
+                          event.stopPropagation();
+                          dispatch(setBulkAdd(true))
+                        }}
                       >
                         {t('addList')}
                       </li>
@@ -253,8 +261,13 @@ const SectionsList = () => {
                               {...provided.draggableProps}
                               {...provided.dragHandleProps}
                             >
-                              <span className="block">{index + 1}.</span>{' '}
-                              {activity.name}
+                              <span className="block">{index + 1}.</span>
+                              <span
+                                className="break-words overflow-hidden"
+                                title={activity.name}
+                              >
+                                {activity.name}
+                              </span>
                               {section._id !== 'all-activities' && (<button
                                 onClick={(event) =>
                                   toggleActivityMenu(event, activity._id)
