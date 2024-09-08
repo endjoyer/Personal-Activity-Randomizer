@@ -3,7 +3,7 @@ import Cookies from 'js-cookie';
 import LogoutButton from './LogoutButton';
 import Lang from './Lang';
 import Image from 'next/image';
-import parIcon from '../public/par-icon.png';
+import parIcon from '../public/images/par-icon.png';
 
 const Header = ({ isAuthPage }: { isAuthPage?: boolean }) => {
   return (

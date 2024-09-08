@@ -3,26 +3,6 @@
   padding: 20px 0 40px;
 }
 
-.randomizeButton {
-  background-color: #4f46e5;
-  color: white;
-  padding: 10px 20px;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  font-size: 16px;
-  transition: all 0.3s ease;
-}
-
-.randomizeButton:hover {
-  background-color: #4338ca;
-}
-
-.randomizeButton:active {
-  background-color: #3d31e4;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
-}
-
 .randomActivityDisplay {
   margin-top: 20px;
 }
