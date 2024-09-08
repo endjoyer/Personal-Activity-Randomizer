@@ -133,7 +133,7 @@ const ActivityRandomizer = () => {
     <div className={`sm:p-10 sm:pt-5 ${styles.randomizerContainer}`}>
       <Button
         type="button"
-        className={`activity-form bg-gradient-to-tl from-pink-500 to-yellow-500  text-white shadow-lg text-white font-bold rounded transition-transform duration-300 transform focus:outline-none ${isClicked ? 'scale-90' : ''
+        className={`activity-form bg-gradient-to-tl from-pink-500 to-yellow-500 text-white shadow-lg py-2 text-white font-bold rounded transition-transform duration-300 transform focus:outline-none ${isClicked ? 'scale-90' : ''
           } hover:opacity-90`}
         onClick={() => {
           handleRandomize();
