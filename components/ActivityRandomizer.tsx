@@ -131,19 +131,7 @@ const ActivityRandomizer = () => {
 
   return (
     <div className={`sm:p-10 sm:pt-5 ${styles.randomizerContainer}`}>
-      <Button
-        type="button"
-        className={`activity-form bg-gradient-to-tl from-pink-500 to-yellow-500 text-white shadow-lg py-2 text-white font-bold rounded transition-transform duration-300 transform focus:outline-none ${isClicked ? 'scale-90' : ''
-          } hover:opacity-90`}
-        onClick={() => {
-          handleRandomize();
-          setIsClicked(true);
-          setTimeout(() => setIsClicked(false), 300);
-        }}
-      >
-        {t('randomizer')}
-      </Button>
-      <div className={styles.randomActivityDisplay}>
+      <div className="mb-6">
         <p className="text-lg font-semibold">
           {selectedSectionName ? selectedSectionName : t('selectSection')}
         </p>
@@ -157,6 +145,18 @@ const ActivityRandomizer = () => {
           </p>
         )}
       </div>
+      <Button
+        type="button"
+        className={`activity-form bg-gradient-to-tl from-pink-500 to-yellow-500 text-white shadow-lg py-2 text-white font-bold rounded transition-transform duration-300 transform focus:outline-none ${isClicked ? 'scale-90' : ''
+          } hover:opacity-90`}
+        onClick={() => {
+          handleRandomize();
+          setIsClicked(true);
+          setTimeout(() => setIsClicked(false), 300);
+        }}
+      >
+        {t('randomizer')}
+      </Button>
       <div className={styles.toggleWeightedRandom}>
         <label className='max-w-fit' title={t('weightedRandomTitle')}>
           <input

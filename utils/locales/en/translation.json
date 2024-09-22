@@ -25,5 +25,7 @@
   "allActivities": "All activities",
   "randomizer": "Randomize",
   "activityCopied": "Activity copied",
-  "activityCopyHint": "Activity copy"
+  "activityCopyHint": "Activity copy",
+  "editList": "Edit list",
+  "save": "Save"
 }
