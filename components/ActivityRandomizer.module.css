@@ -3,10 +3,6 @@
   padding: 20px 0 40px;
 }
 
-.randomActivityDisplay {
-  margin-top: 20px;
-}
-
 .activityName {
   font-size: 30px;
   font-weight: bold;
@@ -45,7 +41,7 @@
 }
 
 @media (min-width: 840px) {
-    .randomizerContainer {
-      padding: 20px 40px 40px;
-    }
+  .randomizerContainer {
+    padding: 20px 40px 40px;
+  }
 }

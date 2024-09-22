@@ -25,5 +25,7 @@
   "allActivities": "Все активности",
   "randomizer": "Рандомизировать",
   "activityCopied": "Активность скопирована",
-  "activityCopyHint": "Скопировать активность"
+  "activityCopyHint": "Скопировать активность",
+  "editList": "Редактировать список",
+  "save": "Сохранить"
 }
