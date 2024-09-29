@@ -36,6 +36,7 @@ function Home() {
         </section>
         <section className={styles.techContainer}>
           <ActivityForm />
+          <div className={styles.divider}></div>
           <ActivityRandomizer />
         </section>
       </main>

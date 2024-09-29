@@ -62,8 +62,10 @@ const SectionsList = () => {
   };
 
   const handleEditList = (sectionId: string) => {
-    dispatch(setBulkAdd(true));
     dispatch(selectSection(sectionId));
+    setTimeout(() => {
+      dispatch(setBulkAdd(true));
+    }, 0);
   };
 
   const handleRenameSection = (sectionId: string, newName: string) => {
