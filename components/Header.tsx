@@ -1,4 +1,3 @@
-import React from 'react';
 import Cookies from 'js-cookie';
 import LogoutButton from './LogoutButton';
 import Lang from './Lang';

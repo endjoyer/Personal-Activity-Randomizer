@@ -1,4 +1,3 @@
-import React from 'react';
 import { useTranslation } from 'react-i18next';
 import Cookies from 'js-cookie';
 
@@ -16,15 +15,13 @@ const Lang = () => {
     <div className='activity-form'>
       <button
         onClick={() => changeLanguage('en')}
-        className={`mr-2 ${currentLanguage === 'en' ? 'underline' : 'opacity-75'
-          }`}
+        className={`mr-2 ${currentLanguage === 'en' ? 'underline' : 'opacity-75'}`}
       >
         EN
       </button>
       <button
         onClick={() => changeLanguage('ru')}
-        className={`${currentLanguage === 'ru' ? 'underline' : 'opacity-75'
-          }`}
+        className={`${currentLanguage === 'ru' ? 'underline' : 'opacity-75'}`}
       >
         RU
       </button>
@@ -33,3 +30,4 @@ const Lang = () => {
 };
 
 export default Lang;
+
