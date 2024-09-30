@@ -1,5 +1,5 @@
 'use client';
-import { useState, FormEvent } from 'react';
+import { useState, FormEvent, useEffect } from 'react';
 import Link from 'next/link';
 import axios from 'axios';
 import { useRouter } from 'next/navigation';
@@ -8,10 +8,12 @@ import { setToken, setUser } from '../../redux/authSlice';
 import Cookies from 'js-cookie';
 import { useTranslation } from 'react-i18next';
 import Header from '@/components/Header';
+import Loader from '@/components/Loader';
 
 const Register = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [isLoading, setIsLoading] = useState(true);
   const router = useRouter();
   const dispatch = useDispatch();
   const [errors, setErrors] = useState<{
@@ -19,6 +21,10 @@ const Register = () => {
     password?: string;
   }>({});
   const { t } = useTranslation();
+
+  useEffect(() => {
+    setIsLoading(false)
+  }, []);
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
@@ -54,6 +60,10 @@ const Register = () => {
     }
     return err;
   };
+
+  if (isLoading) {
+    return <div className="relative w-full min-h-screen"><Loader /></div>;
+  }
 
   return (
     <>

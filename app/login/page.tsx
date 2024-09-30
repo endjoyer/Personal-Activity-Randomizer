@@ -1,5 +1,5 @@
 'use client';
-import { useState, FormEvent } from 'react';
+import { useState, FormEvent, useEffect } from 'react';
 import Link from 'next/link';
 import axios from 'axios';
 import Cookies from 'js-cookie';
@@ -8,6 +8,7 @@ import { useDispatch } from 'react-redux';
 import { setToken, setUser } from '../../redux/authSlice';
 import { useTranslation } from 'react-i18next';
 import Header from '@/components/Header';
+import Loader from '@/components/Loader';
 
 const Login = () => {
   const [username, setUsername] = useState('');
@@ -16,9 +17,14 @@ const Login = () => {
     username?: string;
     password?: string;
   }>({});
+  const [isLoading, setIsLoading] = useState(true);
   const router = useRouter();
   const dispatch = useDispatch();
   const { t } = useTranslation();
+
+  useEffect(() => {
+    setIsLoading(false)
+  }, []);
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
@@ -54,6 +60,10 @@ const Login = () => {
     }
     return err;
   };
+
+  if (isLoading) {
+    return <div className="relative w-full min-h-screen"><Loader /></div>;
+  }
 
   return (
     <>
