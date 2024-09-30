@@ -134,10 +134,12 @@ const SectionsList = () => {
     if (!result.destination) return;
 
     const { source, destination } = result;
-    if (
-      source.droppableId !== destination.droppableId ||
-      source.index === destination.index
-    ) {
+
+    if (source.droppableId === "all-activities" || destination.droppableId === "all-activities") {
+      return;
+    }
+
+    if (source.droppableId !== destination.droppableId || source.index === destination.index) {
       return;
     }
 
