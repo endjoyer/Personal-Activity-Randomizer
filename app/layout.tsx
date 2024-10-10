@@ -36,7 +36,12 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
-        <meta name="google-site-verification" content="5864oEfDjbwquDIWNfzF-_Dg44SmKJPuPajI2TEFepI" />
+        <meta name="yandex-verification" content="8647483e900cbfa7" />
+        <meta name="description" content="An application for systematization and random selection of your leisure activities." />
+        <meta name="keywords" content="activity, randomizer, leisure, hobbies, productivity, активность, рандомайзер, досуг, хобби, продуктивность" />
+        <meta name="author" content="Abamzarov Aleksey" />
+        <meta name="robots" content="index, follow" />
+        <link rel="icon" href="/par-icon.png" />
       </head>
       <body className={varela.className}>
         <ReduxProvider>{children}</ReduxProvider>
