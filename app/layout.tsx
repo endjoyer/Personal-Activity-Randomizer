@@ -7,18 +7,34 @@ const varela = Varela({ subsets: ['latin'], weight: ['400'] });
 
 export const metadata: Metadata = {
   title: 'Personal Activity Randomizer',
-  description: 'An application for systematization and random selection of your leisure activities.',
+  description:
+    'An application for systematization and random selection of your leisure activities.',
   keywords: 'activity, randomizer, leisure, hobbies, productivity',
+  icons: {
+    icon: '/images/par-icon.png',
+    shortcut: '/images/par-icon.png',
+    other: {
+      rel: 'par-icon',
+      url: '/images/par-icon.png',
+    },
+  },
+  verification: {
+    google: 'google',
+    yandex: 'yandex',
+    yahoo: 'yahoo',
+  },
+  category: 'technology',
   openGraph: {
     title: 'Personal Activity Randomizer',
-    description: 'An application for systematization and random selection of your leisure activities.',
+    description:
+      'An application for systematization and random selection of your leisure activities.',
     url: 'https://personal-activity-randomizer.vercel.app/',
     siteName: 'Personal Activity Randomizer',
     locale: 'en_US',
     type: 'website',
     images: [
       {
-        url: 'https://personal-activity-randomizer.vercel.app/par-icon.png',
+        url: 'https://personal-activity-randomizer.vercel.app/images/par-icon.png',
         width: 212,
         height: 196,
         alt: 'Personal Activity Randomizer',
@@ -36,12 +52,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
-        <meta name="yandex-verification" content="8647483e900cbfa7" />
-        <meta name="description" content="An application for systematization and random selection of your leisure activities." />
-        <meta name="keywords" content="activity, randomizer, leisure, hobbies, productivity, активность, рандомайзер, досуг, хобби, продуктивность" />
-        <meta name="author" content="Abamzarov Aleksey" />
-        <meta name="robots" content="index, follow" />
-        <link rel="icon" href="/par-icon.png" />
+        <meta
+          name="google-site-verification"
+          content="5864oEfDjbwquDIWNfzF-_Dg44SmKJPuPajI2TEFepI"
+        />
       </head>
       <body className={varela.className}>
         <ReduxProvider>{children}</ReduxProvider>
