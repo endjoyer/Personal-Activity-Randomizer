@@ -193,6 +193,14 @@ const sectionsSlice = createSlice({
     selectSection: (state, action: PayloadAction<string | null>) => {
       state.selectedSection = action.payload;
     },
+    updateAllActivitiesSectionName: (state, action: PayloadAction<string>) => {
+      const allActivitiesSection = state.sections.find(
+        (section) => section._id === 'all-activities'
+      );
+      if (allActivitiesSection) {
+        allActivitiesSection.name = action.payload;
+      }
+    },
     moveActivity: (
       state,
       action: PayloadAction<{
@@ -267,6 +275,15 @@ const sectionsSlice = createSlice({
             action.payload.activities[action.payload.activities.length - 1]
           );
         }
+        
+        const sectionAllActivity = state.sections.find(
+          (s) => s._id === "all-activities"
+        );
+        if (sectionAllActivity) {
+          sectionAllActivity.activities.push(
+            action.payload.activities[action.payload.activities.length - 1]
+          );
+        }
       })
       .addCase(updateActivity.fulfilled, (state, action) => {
         const section = state.sections.find(
@@ -291,6 +308,15 @@ const sectionsSlice = createSlice({
             (a) => a._id !== action.meta.arg.activityId
           );
         }
+
+        const sectionAllActivity = state.sections.find(
+          (s) => s._id === "all-activities"
+        );
+        if (sectionAllActivity) {
+          sectionAllActivity.activities = sectionAllActivity.activities.filter(
+            (a) => a._id !== action.meta.arg.activityId
+          );
+        }
       })
       .addCase(updateActivityOrder.fulfilled, (state, action) => {
         const sectionIndex = state.sections.findIndex(
@@ -304,6 +330,7 @@ const sectionsSlice = createSlice({
 });
 
 export const {
+  updateAllActivitiesSectionName,
   toggleRepeatActivities,
   toggleWeightedRandom,
   addUsedActivity,
