@@ -9,6 +9,7 @@ import {
   resetUsedActivities,
   toggleRepeatActivities,
   toggleWeightedRandom,
+  updateAllActivitiesSectionName,
 } from '@/redux/sectionsSlice';
 import { loadState, saveState } from '@/utils/localStorageHelpers';
 import { Button } from '@nextui-org/button';
@@ -41,7 +42,7 @@ const ActivityRandomizer = () => {
     (section) => section._id === selectedSection
   )?.name;
   const dispatch = useDispatch<AppDispatch>();
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
 
   // Загружаем состояние чекбоксов из localStorage при монтировании компонента
   useEffect(() => {
@@ -55,6 +56,10 @@ const ActivityRandomizer = () => {
       dispatch(toggleWeightedRandom(savedWeightedRandom));
     }
   }, [dispatch]);
+
+  useEffect(() => {
+    dispatch(updateAllActivitiesSectionName(t('allActivities')));
+  }, [i18n.language, dispatch, t]);
 
   // Обработчики для переключения чекбоксов и сохранения их состояния в localStorage
   const handleToggleRepeatActivities = () => {
@@ -147,8 +152,9 @@ const ActivityRandomizer = () => {
       </div>
       <Button
         type="button"
-        className={`activity-form bg-gradient-to-tl from-pink-500 to-yellow-500 text-white shadow-lg py-2 text-white font-bold rounded transition-transform duration-300 transform focus:outline-none ${isClicked ? 'scale-90' : ''
-          } hover:opacity-90`}
+        className={`activity-form bg-gradient-to-tl from-pink-500 to-yellow-500 text-white shadow-lg py-2 text-white font-bold rounded transition-transform duration-300 transform focus:outline-none ${
+          isClicked ? 'scale-90' : ''
+        } hover:opacity-90`}
         onClick={() => {
           handleRandomize();
           setIsClicked(true);
@@ -158,7 +164,7 @@ const ActivityRandomizer = () => {
         {t('randomizer')}
       </Button>
       <div className={styles.toggleWeightedRandom}>
-        <label className='max-w-fit' title={t('weightedRandomTitle')}>
+        <label className="max-w-fit" title={t('weightedRandomTitle')}>
           <input
             title={t('weightedRandomTitle')}
             type="checkbox"
@@ -178,7 +184,10 @@ const ActivityRandomizer = () => {
           {t('excludeRepeatActivities')}
         </label>
       </div>
-      <NotificationPopup message={t('activityCopied')} visible={notificationVisible} />
+      <NotificationPopup
+        message={t('activityCopied')}
+        visible={notificationVisible}
+      />
     </div>
   );
 };
