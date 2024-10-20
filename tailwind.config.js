@@ -25,7 +25,10 @@ module.exports = {
     },
     extend: {
       colors: {
-        'cream': '#ebdaae', // ваш светло-кремовый цвет
+        cream: '#ebdaae', // ваш светло-кремовый цвет
+      },
+      width: {
+        128: '32rem',
       },
     },
   },

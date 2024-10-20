@@ -12,10 +12,12 @@ const Lang = () => {
   const currentLanguage = i18n.language;
 
   return (
-    <div className='activity-form'>
+    <div className="activity-form flex">
       <button
         onClick={() => changeLanguage('en')}
-        className={`mr-2 ${currentLanguage === 'en' ? 'underline' : 'opacity-75'}`}
+        className={`mr-2 ${
+          currentLanguage === 'en' ? 'underline' : 'opacity-75'
+        }`}
       >
         EN
       </button>
@@ -30,4 +32,3 @@ const Lang = () => {
 };
 
 export default Lang;
-

@@ -7,14 +7,21 @@ import parIcon from '../public/images/par-icon.png';
 const Header = ({ isAuthPage }: { isAuthPage?: boolean }) => {
   return (
     <header
-      className={`sm:flex ${isAuthPage ? 'flex' : 'hidden'
-        } justify-between items-center p-2 px-5 relative font-medium shadow-lg z-10`}
+      className={`sm:flex ${
+        isAuthPage ? 'flex' : 'hidden'
+      } justify-between items-center p-2 px-5 relative font-medium shadow-lg z-10 gap-3`}
     >
       <div className="flex items-center gap-3">
-        <Image src={parIcon} alt="Personal Activity Randomizer Icon" width={40} />
+        <Image
+          src={parIcon}
+          alt="Personal Activity Randomizer Icon"
+          width={40}
+        />
         <h1>Personal Activity Randomizer</h1>
       </div>
-      <p className="absolute left-1/2 transform -translate-x-1/2">{Cookies.get('username')}</p>
+      <p className="absolute left-1/2 transform -translate-x-1/2">
+        {Cookies.get('username')}
+      </p>
       <div className="flex gap-4">
         {Cookies.get('token') && <LogoutButton />}
         <Lang />
@@ -24,4 +31,3 @@ const Header = ({ isAuthPage }: { isAuthPage?: boolean }) => {
 };
 
 export default Header;
-

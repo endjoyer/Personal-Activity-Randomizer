@@ -14,7 +14,7 @@ import {
   moveActivity,
   fetchSections,
   deleteSection,
-  updateSection,
+  updateNameSection,
   updateActivity,
   deleteActivity,
   updateActivityOrder,
@@ -56,6 +56,17 @@ const SectionsList = () => {
     fetchData();
   }, [dispatch]);
 
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
+        setIsMenuOpen({});
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
+
   const handleSelectSection = (sectionId: string) => {
     dispatch(selectSection(sectionId));
   };
@@ -78,7 +89,7 @@ const SectionsList = () => {
   };
 
   const handleRenameSection = (sectionId: string, newName: string) => {
-    dispatch(updateSection({ sectionId, newName }));
+    dispatch(updateNameSection({ sectionId, newName }));
     setEditingId(null);
   };
 
@@ -135,11 +146,17 @@ const SectionsList = () => {
 
     const { source, destination } = result;
 
-    if (source.droppableId === "all-activities" || destination.droppableId === "all-activities") {
+    if (
+      source.droppableId === 'all-activities' ||
+      destination.droppableId === 'all-activities'
+    ) {
       return;
     }
 
-    if (source.droppableId !== destination.droppableId || source.index === destination.index) {
+    if (
+      source.droppableId !== destination.droppableId ||
+      source.index === destination.index
+    ) {
       return;
     }
 
@@ -165,23 +182,12 @@ const SectionsList = () => {
     );
   };
 
-  useEffect(() => {
-    dispatch(fetchSections());
-  }, [dispatch]);
-
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
-        setIsMenuOpen({});
-      }
-    };
-
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => document.removeEventListener('mousedown', handleClickOutside);
-  }, []);
-
   if (isLoading) {
-    return <div className="relative w-full h-full"><Loader /></div>;
+    return (
+      <div className="relative w-full h-full">
+        <Loader />
+      </div>
+    );
   }
 
   return (
@@ -199,8 +205,9 @@ const SectionsList = () => {
               className={`flex gap-4 p-4 pr-3 pl-3 justify-between items-center`}
             >
               <span
-                className={`p-1 pr-2 pl-2 transform transition-transform cursor-pointer ${expandedSections[section._id] ? 'rotate-90' : ''
-                  }`}
+                className={`p-1 pr-2 pl-2 transform transition-transform cursor-pointer ${
+                  expandedSections[section._id] ? 'rotate-90' : ''
+                }`}
                 onClick={() => {
                   toggleSection(section._id);
                 }}
@@ -208,17 +215,23 @@ const SectionsList = () => {
                 &#9654;
               </span>
               <span
-                className={`text-center break-words overflow-hidden ${section._id === 'all-activities' ? 'absolute left-1/2 transform -translate-x-1/2' : ''} ${section._id === selectedSectionId ? ' font-bold' : ''}`}
+                className={`text-center break-words overflow-hidden ${
+                  section._id === 'all-activities'
+                    ? 'absolute left-1/2 transform -translate-x-1/2'
+                    : ''
+                } ${section._id === selectedSectionId ? ' font-bold' : ''}`}
                 title={section.name}
               >
                 {section.name}
               </span>
-              {section._id !== 'all-activities' && (<button
-                onClick={(event) => toggleSectionMenu(event, section._id)}
-                className="text-gray-500 hover:text-gray-700 p-1 pr-2 pl-2"
-              >
-                ⋮
-              </button>)}
+              {section._id !== 'all-activities' && (
+                <button
+                  onClick={(event) => toggleSectionMenu(event, section._id)}
+                  className="text-gray-500 hover:text-gray-700 p-1 pr-2 pl-2"
+                >
+                  ⋮
+                </button>
+              )}
               {isMenuOpen[section._id] && (
                 <div
                   className="origin-top-right absolute right-0 mt-40 mr-2 w-52 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 z-10"
@@ -270,8 +283,9 @@ const SectionsList = () => {
                       >
                         {(provided, snapshot) => (
                           <div
-                            className={`flex gap-2 p-2 my-1 bg-gray-100 rounded first:mt-0 last:mb-0 ${snapshot.isDragging ? 'shadow-lg' : ''
-                              }`}
+                            className={`flex gap-2 p-2 my-1 bg-gray-100 rounded first:mt-0 last:mb-0 ${
+                              snapshot.isDragging ? 'shadow-lg' : ''
+                            }`}
                             ref={provided.innerRef}
                             {...provided.draggableProps}
                             {...provided.dragHandleProps}
@@ -283,48 +297,51 @@ const SectionsList = () => {
                             >
                               {activity.name}
                             </span>
-                            {section._id !== 'all-activities' && (<button
-                              onClick={(event) =>
-                                toggleActivityMenu(event, activity._id)
-                              }
-                              className="text-gray-500 hover:text-gray-700 ml-auto pl-2 pr-2 h-fit"
-                            >
-                              ⋮
-                            </button>)}
-                            {isMenuOpen[activity._id] && section._id !== 'all-activities' && (
-                              <div
-                                className="origin-top-right absolute right-0 mt-8 mr-4 w-52 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 z-10"
-                                ref={menuRef}
+                            {section._id !== 'all-activities' && (
+                              <button
+                                onClick={(event) =>
+                                  toggleActivityMenu(event, activity._id)
+                                }
+                                className="text-gray-500 hover:text-gray-700 ml-auto pl-2 pr-2 h-fit"
                               >
-                                <ul>
-                                  <li
-                                    className="p-2 hover:bg-gray-100 cursor-pointer"
-                                    onClick={(event) => {
-                                      handleRenameClick(
-                                        event,
-                                        activity._id,
-                                        activity?.name,
-                                        true
-                                      );
-                                      setCurrentSectionId(section._id);
-                                    }}
-                                  >
-                                    {t('rename')}
-                                  </li>
-                                  <li
-                                    className="p-2 hover:bg-gray-100 cursor-pointer"
-                                    onClick={() =>
-                                      handleRemoveActivity(
-                                        section._id,
-                                        activity._id
-                                      )
-                                    }
-                                  >
-                                    {t('delete')}
-                                  </li>
-                                </ul>
-                              </div>
+                                ⋮
+                              </button>
                             )}
+                            {isMenuOpen[activity._id] &&
+                              section._id !== 'all-activities' && (
+                                <div
+                                  className="origin-top-right absolute right-0 mt-8 mr-4 w-52 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 z-10"
+                                  ref={menuRef}
+                                >
+                                  <ul>
+                                    <li
+                                      className="p-2 hover:bg-gray-100 cursor-pointer"
+                                      onClick={(event) => {
+                                        handleRenameClick(
+                                          event,
+                                          activity._id,
+                                          activity?.name,
+                                          true
+                                        );
+                                        setCurrentSectionId(section._id);
+                                      }}
+                                    >
+                                      {t('rename')}
+                                    </li>
+                                    <li
+                                      className="p-2 hover:bg-gray-100 cursor-pointer"
+                                      onClick={() =>
+                                        handleRemoveActivity(
+                                          section._id,
+                                          activity._id
+                                        )
+                                      }
+                                    >
+                                      {t('delete')}
+                                    </li>
+                                  </ul>
+                                </div>
+                              )}
                           </div>
                         )}
                       </Draggable>
@@ -343,11 +360,7 @@ const SectionsList = () => {
               onSave={
                 isActivity
                   ? (newName) =>
-                    handleRenameActivity(
-                      currentSectionId,
-                      editingId,
-                      newName
-                    )
+                      handleRenameActivity(currentSectionId, editingId, newName)
                   : (newName) => handleRenameSection(editingId, newName)
               }
               onCancel={() => setEditingId(null)}

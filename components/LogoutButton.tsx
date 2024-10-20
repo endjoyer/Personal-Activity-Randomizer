@@ -12,6 +12,7 @@ const LogoutButton = () => {
 
   const handleLogout = () => {
     Cookies.remove('token');
+    Cookies.remove('username');
     dispatch(logout());
     router.push('/login');
   };

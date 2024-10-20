@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '../redux/store';
 import { useTranslation } from 'react-i18next';
+import Image from 'next/image';
+import infoIcon from '../public/images/info.svg';
 import styles from './ActivityRandomizer.module.css';
 import NotificationPopup from './NotificationPopup';
 import {
@@ -164,20 +166,30 @@ const ActivityRandomizer = () => {
         {t('randomizer')}
       </Button>
       <div className={styles.toggleWeightedRandom}>
-        <label className="max-w-fit" title={t('weightedRandomTitle')}>
+        <label
+          className="activity-form max-w-fit"
+          title={t('weightedRandomTitle')}
+        >
           <input
             title={t('weightedRandomTitle')}
             type="checkbox"
-            className="activity-form hover:cursor-pointer"
+            className="hover:cursor-pointer"
             checked={weightedRandom}
             onChange={handleToggleWeightedRandom}
           />
           {t('weightedRandom')}
+          <Image
+            src={infoIcon}
+            alt={t('infoIcon')}
+            height={17}
+            className="inline-block ml-2 cursor-pointer"
+            title={t('weightedRandomTitle')}
+          />
         </label>
-        <label>
+        <label className="activity-form max-w-fit">
           <input
             type="checkbox"
-            className="activity-form hover:cursor-pointer"
+            className="hover:cursor-pointer"
             checked={!repeatActivities}
             onChange={handleToggleRepeatActivities}
           />
