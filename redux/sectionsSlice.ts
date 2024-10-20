@@ -91,24 +91,6 @@ export const addNewActivity = createAsyncThunk(
   }
 );
 
-// Асинхронное действие для обновления раздела
-export const updateSection = createAsyncThunk(
-  'sections/updateSection',
-  async (
-    { sectionId, newName }: { sectionId: string; newName: string },
-    { rejectWithValue }
-  ) => {
-    try {
-      const response = await axios.put(`/api/sections/${sectionId}`, {
-        name: newName,
-      });
-      return response.data;
-    } catch (error: any) {
-      return rejectWithValue(error.response?.data);
-    }
-  }
-);
-
 // Асинхронное действие для обновления активности в разделе
 export const updateActivity = createAsyncThunk(
   'sections/updateActivity',
@@ -201,6 +183,13 @@ const sectionsSlice = createSlice({
         allActivitiesSection.name = action.payload;
       }
     },
+    updateSection: (state, action: PayloadAction<Section>) => {
+      const updatedSection = action.payload;
+      const index = state.sections.findIndex(section => section._id === updatedSection._id);
+      if (index !== -1) {
+        state.sections[index] = updatedSection;
+      }
+    },
     moveActivity: (
       state,
       action: PayloadAction<{
@@ -252,14 +241,6 @@ const sectionsSlice = createSlice({
       })
       .addCase(addNewSection.fulfilled, (state, action) => {
         state.sections.push(action.payload);
-      })
-      .addCase(updateSection.fulfilled, (state, action) => {
-        const index = state.sections.findIndex(
-          (section) => section._id === action.payload._id
-        );
-        if (index !== -1) {
-          state.sections[index] = action.payload;
-        }
       })
       .addCase(deleteSection.fulfilled, (state, action) => {
         state.sections = state.sections.filter(
@@ -331,6 +312,7 @@ const sectionsSlice = createSlice({
 
 export const {
   updateAllActivitiesSectionName,
+  updateSection,
   toggleRepeatActivities,
   toggleWeightedRandom,
   addUsedActivity,

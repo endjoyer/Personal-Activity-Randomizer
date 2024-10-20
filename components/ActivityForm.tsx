@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { Button } from "@nextui-org/button";
 import { AppDispatch, RootState } from '../redux/store';
-import { addNewSection, addNewActivity, deleteActivity } from '../redux/sectionsSlice';
+import { addNewSection, addNewActivity, deleteActivity, updateSection } from '../redux/sectionsSlice';
 
 const ActivityForm = () => {
   const [input, setInput] = useState('');
@@ -45,16 +45,21 @@ const ActivityForm = () => {
         .filter((line) => line.length > 0 && !line.match(/^[-. ]+$/));
 
       try {
-        const sectionActivities = sections.find(
-          (section) => section._id === selectedSection
-        )?.activities || [];
-        for (const activity of sectionActivities) {
-          await dispatch(deleteActivity({ sectionId: selectedSection, activityId: activity._id }));
+        const response = await fetch(`/api/sections/${selectedSection}/activities/bulkUpdate`, {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ activities: activities.map(name => ({ name })) }),
+        });
+
+        if (!response.ok) {
+          throw new Error('Failed to update activities');
         }
 
-        for (const activity of activities) {
-          await dispatchActivity(selectedSection, activity);
-        }
+        const updatedSection = await response.json();
+
+        dispatch(updateSection(updatedSection));
       } catch (error) {
         console.error("Error saving activities:", error);
       }
