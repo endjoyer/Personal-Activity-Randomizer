@@ -92,7 +92,7 @@ export const addNewActivity = createAsyncThunk(
 );
 
 // Асинхронное действие для обновления раздела
-export const updateSection = createAsyncThunk(
+export const updateNameSection = createAsyncThunk(
   'sections/updateSection',
   async (
     { sectionId, newName }: { sectionId: string; newName: string },
@@ -201,6 +201,15 @@ const sectionsSlice = createSlice({
         allActivitiesSection.name = action.payload;
       }
     },
+    updateSection: (state, action: PayloadAction<Section>) => {
+      const updatedSection = action.payload;
+      const index = state.sections.findIndex(
+        (section) => section._id === updatedSection._id
+      );
+      if (index !== -1) {
+        state.sections[index] = updatedSection;
+      }
+    },
     moveActivity: (
       state,
       action: PayloadAction<{
@@ -253,14 +262,6 @@ const sectionsSlice = createSlice({
       .addCase(addNewSection.fulfilled, (state, action) => {
         state.sections.push(action.payload);
       })
-      .addCase(updateSection.fulfilled, (state, action) => {
-        const index = state.sections.findIndex(
-          (section) => section._id === action.payload._id
-        );
-        if (index !== -1) {
-          state.sections[index] = action.payload;
-        }
-      })
       .addCase(deleteSection.fulfilled, (state, action) => {
         state.sections = state.sections.filter(
           (section) => section._id !== action.payload
@@ -275,14 +276,22 @@ const sectionsSlice = createSlice({
             action.payload.activities[action.payload.activities.length - 1]
           );
         }
-        
+
         const sectionAllActivity = state.sections.find(
-          (s) => s._id === "all-activities"
+          (s) => s._id === 'all-activities'
         );
         if (sectionAllActivity) {
           sectionAllActivity.activities.push(
             action.payload.activities[action.payload.activities.length - 1]
           );
+        }
+      })
+      .addCase(updateNameSection.fulfilled, (state, action) => {
+        const index = state.sections.findIndex(
+          (section) => section._id === action.payload._id
+        );
+        if (index !== -1) {
+          state.sections[index] = action.payload;
         }
       })
       .addCase(updateActivity.fulfilled, (state, action) => {
@@ -310,7 +319,7 @@ const sectionsSlice = createSlice({
         }
 
         const sectionAllActivity = state.sections.find(
-          (s) => s._id === "all-activities"
+          (s) => s._id === 'all-activities'
         );
         if (sectionAllActivity) {
           sectionAllActivity.activities = sectionAllActivity.activities.filter(
@@ -331,6 +340,7 @@ const sectionsSlice = createSlice({
 
 export const {
   updateAllActivitiesSectionName,
+  updateSection,
   toggleRepeatActivities,
   toggleWeightedRandom,
   addUsedActivity,
