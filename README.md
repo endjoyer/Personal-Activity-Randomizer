@@ -1,7 +1,7 @@
 # Personal Activity Randomizer (PAR)
 
 (EN)
-An application for a random selection of leisure activities that you have added for yourself.
+An application for systematization and random selection of your leisure activities.
 
 ## What is the application for?
 
@@ -17,11 +17,17 @@ During it, I plan to use various interesting and in-demand technologies to impro
 ## Technologies
 
 - TypeScript
-- Next
-- Redux
+- Next.js
+- Redux Toolkit
 - MongoDB
-- Tailwindcss
-- Docker(in the future)
+- Tailwind CSS
+- Axios
+- bcryptjs
+- i18next
+- jose
+- js-cookie
+- jsonwebtoken
+- react-beautiful-dnd
   and others
 
 ## Development Stage (Pre-Alpha)
@@ -31,7 +37,7 @@ At the moment, the applications are in development. Many planned functions have 
 ---
 
 (RUS)
-Приложение для случайного подбора видов досуга, которые вы добавили для себя.
+Приложение для систематизации и случайного подбора видов вашего досуга.
 
 ## Для чего приложение нужно
 
@@ -47,11 +53,17 @@ At the moment, the applications are in development. Many planned functions have 
 ## Технологии
 
 - TypeScript
-- Next
-- Redux
+- Next.js
+- Redux Toolkit
 - MongoDB
-- Tailwindcss
-- Docker(в будущем)
+- Tailwind CSS
+- Axios
+- bcryptjs
+- i18next
+- jose
+- js-cookie
+- jsonwebtoken
+- react-beautiful-dnd
   и другие
 
 ## Команды
@@ -70,4 +82,4 @@ $ npm run start
 
 ## Стадия разработки (Pre-Alpha)
 
-На данный момент, приложения в разработке. Не реализованно и не доделано много запланируемых функций, есть только минимальная стилизация, и будет происходить рефактор кода, примерно выполнено 50% из плана. В будущем это будет постепенно исправляться.
+На данный момент, приложение в разработке. Не реализованно и не доделаны некоторые запланированные функции, есть только минимальная стилизация, а также будет дорабатыватся удобство функциональность существующих функций и будет происходить рефактор кода. Примерно выполнено 75% из плана. В будущем это будет постепенно исправляться.
