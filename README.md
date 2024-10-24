@@ -30,13 +30,13 @@ During it, I plan to use various interesting and in-demand technologies to impro
 - react-beautiful-dnd
   and others
 
-## Development Stage (Pre-Alpha)
+## Development Stage (Beta)
 
-At the moment, the applications are in development. Many planned functions have not been implemented or completed, there is only minimal styling, and code refactor will occur, approximately 50% of the plan has been completed. This will be gradually corrected in the future.
+At the moment, the application is still in development. Some planned functions have not been implemented or completed, and a code editor has not been produced. Approximately 85% of the plan has been completed. It will be gradually refined in the future.
 
 ---
 
-(RUS)
+(RU)
 Приложение для систематизации и случайного подбора видов вашего досуга.
 
 ## Для чего приложение нужно
@@ -80,6 +80,6 @@ $ npm run build
 $ npm run start
 ```
 
-## Стадия разработки (Pre-Alpha)
+## Стадия разработки (Beta)
 
-На данный момент, приложение в разработке. Не реализованно и не доделаны некоторые запланированные функции, есть только минимальная стилизация, а также будет дорабатыватся удобство функциональность существующих функций и будет происходить рефактор кода. Примерно выполнено 75% из плана. В будущем это будет постепенно исправляться.
+На данный момент, приложение ещё в разработке. Не реализованно и не доделаны некоторые запланированные функции, также не произведен рефактор кода. Примерно выполнено 85% из плана. В будущем будет постепенно дорабатываться.
