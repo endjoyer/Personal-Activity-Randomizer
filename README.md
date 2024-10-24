@@ -1,4 +1,6 @@
-(ENG)
+# Personal Activity Randomizer (PAR)
+
+(EN)
 An application for systematization and random selection of your leisure activities.
 
 ## What is the application for?
@@ -60,7 +62,9 @@ Sample response
 ]
 }
 
-(RUS)
+---
+
+(RU)
 Приложение для систематизации и случайного подбора видов вашего досуга.
 
 ## Для чего приложение нужно
