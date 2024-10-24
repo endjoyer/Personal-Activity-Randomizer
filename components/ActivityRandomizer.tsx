@@ -171,7 +171,6 @@ const ActivityRandomizer = () => {
           title={t('weightedRandomTitle')}
         >
           <input
-            title={t('weightedRandomTitle')}
             type="checkbox"
             className="hover:cursor-pointer"
             checked={weightedRandom}

@@ -17,11 +17,17 @@ During it, I plan to use various interesting and in-demand technologies to impro
 ## Technologies
 
 - TypeScript
-- Next
-- Redux
+- Next.js
+- Redux Toolkit
 - MongoDB
-- Tailwindcss
-- Docker(in the future)
+- Tailwind CSS
+- Axios
+- bcryptjs
+- i18next
+- jose
+- js-cookie
+- jsonwebtoken
+- react-beautiful-dnd
   and others
 
 ## Development Stage (Pre-Alpha)
@@ -47,11 +53,17 @@ At the moment, the applications are in development. Many planned functions have 
 ## Технологии
 
 - TypeScript
-- Next
-- Redux
+- Next.js
+- Redux Toolkit
 - MongoDB
-- Tailwindcss
-- Docker(в будущем)
+- Tailwind CSS
+- Axios
+- bcryptjs
+- i18next
+- jose
+- js-cookie
+- jsonwebtoken
+- react-beautiful-dnd
   и другие
 
 ## Команды
