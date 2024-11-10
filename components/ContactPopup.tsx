@@ -22,7 +22,7 @@ const ContactPopup = ({ onClose }: { onClose: () => void }) => {
       const emailReg = /^[-\w.]+@([A-z0-9][-A-z0-9]+\.)+[A-z]{2,4}$/;
       setErrors({
         ...errors,
-        email: emailReg.test(value) ? '' : t('invalidEmailFormat'),
+        email: emailReg.test(value) ? '' : t('invalidEmail'),
       });
     }
   };
