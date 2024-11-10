@@ -4,9 +4,11 @@ import { useTranslation } from 'react-i18next';
 import SectionsList from './SectionsList';
 import LogoutButton from './LogoutButton';
 import styles from './HamburgerMenu.module.css';
+import Contact from './Contact';
 
 const HamburgerMenu = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [isContactOpen, setIsContactOpen] = useState(false);
   const { t, i18n } = useTranslation();
   const menuRef = useRef<HTMLDivElement>(null);
 
@@ -32,20 +34,39 @@ const HamburgerMenu = () => {
 
   return (
     <>
-      <div className={`${styles.hamburgerMenu} ${isOpen ? styles.open : ''}`} ref={menuRef}>
+      <div
+        className={`${styles.hamburgerMenu} ${isOpen ? styles.open : ''}`}
+        ref={menuRef}
+      >
         <div
-          className={`activity-form ${styles.hamburgerLines}`}
+          className={`activity-form ${styles.hamburgerLines} ${
+            isContactOpen ? styles.hidden : ''
+          }`}
           onClick={() => setIsOpen(!isOpen)}
         >
-          <span className={`${styles.line} ${isOpen ? styles.line1Open : ''}`}></span>
-          <span className={`${styles.line} ${isOpen ? styles.line2Open : ''}`}></span>
-          <span className={`${styles.line} ${isOpen ? styles.line3Open : ''}`}></span>
+          <span
+            className={`${styles.line} ${isOpen ? styles.line1Open : ''}`}
+          ></span>
+          <span
+            className={`${styles.line} ${isOpen ? styles.line2Open : ''}`}
+          ></span>
+          <span
+            className={`${styles.line} ${isOpen ? styles.line3Open : ''}`}
+          ></span>
         </div>
         <div className={styles.menuItems}>
           <div className={styles.logo}>
-            <h1>PAR</h1>
+            <span className={styles.titleContainer}>
+              <h1>PAR</h1>
+              <Contact
+                isContactOpen={isContactOpen}
+                setIsContactOpen={setIsContactOpen}
+              />
+            </span>
+
             <p className={styles.username}>{Cookies.get('username')}</p>
           </div>
+          <div className={styles.contactButton}></div>
           <div className={styles.logoutButton}>
             <LogoutButton />
           </div>

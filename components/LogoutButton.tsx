@@ -17,7 +17,11 @@ const LogoutButton = () => {
     router.push('/login');
   };
 
-  return <button onClick={handleLogout}>{t('logout')}</button>;
+  return (
+    <button className="ml-3" onClick={handleLogout}>
+      {t('logout')}
+    </button>
+  );
 };
 
 export default LogoutButton;

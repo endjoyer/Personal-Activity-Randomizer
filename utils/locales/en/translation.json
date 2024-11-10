@@ -28,5 +28,16 @@
   "activityCopyHint": "Activity copy",
   "editList": "Edit list",
   "infoIcon": "Info icon",
-  "save": "Save"
+  "save": "Save",
+  "invalidEmail": "Invalid email format",
+  "formErrors": "Please correct the errors in the form",
+  "messageSent": "Message sent successfully",
+  "sendError": "An error occurred while sending the message",
+  "sendPrompt": "You can send me a message",
+  "formIntro": "If you have any questions or suggestions, fill out the form below and I will definitely answer you.",
+  "emailPlaceholder": "Enter email",
+  "messagePlaceholder": "Message",
+  "namePlaceholder": "Your name",
+  "sendButton": "Send",
+  "contacts": "Contacts"
 }
