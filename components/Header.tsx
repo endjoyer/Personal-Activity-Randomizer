@@ -3,8 +3,12 @@ import LogoutButton from './LogoutButton';
 import Lang from './Lang';
 import Image from 'next/image';
 import parIcon from '../public/images/par-icon.png';
+import Contact from './Contact';
+import { useState } from 'react';
 
 const Header = ({ isAuthPage }: { isAuthPage?: boolean }) => {
+  const [isContactOpen, setIsContactOpen] = useState(false);
+
   return (
     <header
       className={`sm:flex ${
@@ -23,8 +27,12 @@ const Header = ({ isAuthPage }: { isAuthPage?: boolean }) => {
         {Cookies.get('username')}
       </p>
       <div className="flex gap-4">
-        {Cookies.get('token') && <LogoutButton />}
+        <Contact
+          isContactOpen={isContactOpen}
+          setIsContactOpen={setIsContactOpen}
+        />
         <Lang />
+        {Cookies.get('token') && <LogoutButton />}
       </div>
     </header>
   );
