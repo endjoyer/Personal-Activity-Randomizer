@@ -1,7 +1,8 @@
 import Image from 'next/image';
 import contactIcon from '../public/images/contact.svg';
-import ContactPopup from './ContactPopup';
+import Popup from './Popup';
 import { useTranslation } from 'react-i18next';
+import ContactPopup from './ContactPopup';
 
 const Contact = ({
   isContactOpen,
@@ -17,9 +18,9 @@ const Contact = ({
       <button title={t('contacts')} onClick={() => setIsContactOpen(true)}>
         <Image src={contactIcon} alt={t('contacts')} width={20} />
       </button>
-      {isContactOpen && (
-        <ContactPopup onClose={() => setIsContactOpen(false)} />
-      )}
+      <Popup isOpen={isContactOpen} onClose={() => setIsContactOpen(false)}>
+        <ContactPopup />
+      </Popup>
     </>
   );
 };

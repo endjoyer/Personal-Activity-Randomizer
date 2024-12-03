@@ -1,13 +1,16 @@
+import { useState } from 'react';
 import Cookies from 'js-cookie';
 import LogoutButton from './LogoutButton';
 import Lang from './Lang';
 import Image from 'next/image';
 import parIcon from '../public/images/par-icon.png';
 import Contact from './Contact';
-import { useState } from 'react';
+import Popup from './Popup';
+import ActivityList from './ActivityList';
 
 const Header = ({ isAuthPage }: { isAuthPage?: boolean }) => {
   const [isContactOpen, setIsContactOpen] = useState(false);
+  const [isActivityListOpen, setIsActivityListOpen] = useState(false);
 
   return (
     <header
@@ -27,6 +30,13 @@ const Header = ({ isAuthPage }: { isAuthPage?: boolean }) => {
         {Cookies.get('username')}
       </p>
       <div className="flex gap-4">
+        <button onClick={() => setIsActivityListOpen(true)}>Activities</button>
+        <Popup
+          isOpen={isActivityListOpen}
+          onClose={() => setIsActivityListOpen(false)}
+        >
+          <ActivityList />
+        </Popup>
         <Contact
           isContactOpen={isContactOpen}
           setIsContactOpen={setIsContactOpen}

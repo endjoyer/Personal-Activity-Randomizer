@@ -193,6 +193,9 @@ const sectionsSlice = createSlice({
     selectSection: (state, action: PayloadAction<string | null>) => {
       state.selectedSection = action.payload;
     },
+    addSectionWithActivities: (state, action: PayloadAction<Section>) => {
+      state.sections.push(action.payload);
+    },
     updateAllActivitiesSectionName: (state, action: PayloadAction<string>) => {
       const allActivitiesSection = state.sections.find(
         (section) => section._id === 'all-activities'
@@ -339,6 +342,7 @@ const sectionsSlice = createSlice({
 });
 
 export const {
+  addSectionWithActivities,
   updateAllActivitiesSectionName,
   updateSection,
   toggleRepeatActivities,
