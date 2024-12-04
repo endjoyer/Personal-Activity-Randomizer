@@ -93,9 +93,27 @@
   color: #5b0606;
 }
 
+.logoutButton button {
+  margin-left: 0;
+}
+
 .logoutButton:hover {
   color: #c90303;
   transition: all 0.2s;
+}
+
+.collections {
+  width: fit-content;
+  margin: 20px auto 0;
+}
+
+.collections button {
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}
+
+.collections button:hover {
+  opacity: 0.7;
 }
 
 .languageButtons {

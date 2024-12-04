@@ -1,3 +1,11 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+header button {
+  transition: opacity 0.15s;
+}
+
+header button:hover {
+  opacity: 0.75;
+}

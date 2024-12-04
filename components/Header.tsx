@@ -1,13 +1,19 @@
+import { useState } from 'react';
 import Cookies from 'js-cookie';
 import LogoutButton from './LogoutButton';
 import Lang from './Lang';
 import Image from 'next/image';
 import parIcon from '../public/images/par-icon.png';
 import Contact from './Contact';
-import { useState } from 'react';
+import Popup from './Popup';
+import ActivityList from './ActivityList';
+import { useTranslation } from 'react-i18next';
 
 const Header = ({ isAuthPage }: { isAuthPage?: boolean }) => {
   const [isContactOpen, setIsContactOpen] = useState(false);
+  const [isActivityListOpen, setIsActivityListOpen] = useState(false);
+
+  const { t } = useTranslation();
 
   return (
     <header
@@ -32,6 +38,15 @@ const Header = ({ isAuthPage }: { isAuthPage?: boolean }) => {
           setIsContactOpen={setIsContactOpen}
         />
         <Lang />
+        <button onClick={() => setIsActivityListOpen(true)}>
+          {t('collections')}
+        </button>
+        <Popup
+          isOpen={isActivityListOpen}
+          onClose={() => setIsActivityListOpen(false)}
+        >
+          <ActivityList />
+        </Popup>
         {Cookies.get('token') && <LogoutButton />}
       </div>
     </header>

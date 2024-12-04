@@ -5,10 +5,13 @@ import SectionsList from './SectionsList';
 import LogoutButton from './LogoutButton';
 import styles from './HamburgerMenu.module.css';
 import Contact from './Contact';
+import Popup from './Popup';
+import ActivityList from './ActivityList';
 
 const HamburgerMenu = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isContactOpen, setIsContactOpen] = useState(false);
+  const [isActivityListOpen, setIsActivityListOpen] = useState(false);
   const { t, i18n } = useTranslation();
   const menuRef = useRef<HTMLDivElement>(null);
 
@@ -40,7 +43,7 @@ const HamburgerMenu = () => {
       >
         <div
           className={`activity-form ${styles.hamburgerLines} ${
-            isContactOpen ? styles.hidden : ''
+            isContactOpen || isActivityListOpen ? styles.hidden : ''
           }`}
           onClick={() => setIsOpen(!isOpen)}
         >
@@ -69,6 +72,17 @@ const HamburgerMenu = () => {
           <div className={styles.contactButton}></div>
           <div className={styles.logoutButton}>
             <LogoutButton />
+          </div>
+          <div className={styles.collections}>
+            <button onClick={() => setIsActivityListOpen(true)}>
+              {t('collections')}
+            </button>
+            <Popup
+              isOpen={isActivityListOpen}
+              onClose={() => setIsActivityListOpen(false)}
+            >
+              <ActivityList />
+            </Popup>
           </div>
           <div className={styles.languageButtons}>
             <button onClick={() => changeLanguage('en')}>EN</button>

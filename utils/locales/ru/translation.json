@@ -39,5 +39,7 @@
   "messagePlaceholder": "Сообщение",
   "namePlaceholder": "Ваше имя",
   "sendButton": "Отправить",
-  "contacts": "Контакты"
+  "contacts": "Контакты",
+  "collectionsActivities": "Коллекции активностей",
+  "collections": "Коллекции"
 }
