@@ -1,5 +1,6 @@
 import React from 'react';
 import styles from './ActivityList.module.css';
+import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import { addSectionWithActivities } from '../redux/sectionsSlice';
 import { sections } from '../utils/activitiesData';
@@ -7,6 +8,7 @@ import axios from 'axios';
 
 const ActivityList = () => {
   const dispatch = useDispatch();
+  const { t } = useTranslation();
 
   const handleAddSection = async (sectionId: string) => {
     const selectedSection = sections.find(
@@ -56,20 +58,20 @@ const ActivityList = () => {
 
   return (
     <div className={styles.activityList}>
-      <h2>Available Sections</h2>
+      <h2 className={styles.activityListTitle}>{t('collectionsActivities')}</h2>
       <ul>
         {sections.map((section) => (
           <li key={section._id} className={styles.activityItem}>
-            <h3 className={styles.activityTitle}>{section.name}</h3>
+            <div className={styles.activityTitleContainer}>
+              <button
+                className={`${styles.addButton}`}
+                onClick={() => handleAddSection(section._id)}
+              ></button>
+              <h3 className={styles.activityTitle}>{section.name}</h3>
+            </div>
             <p className={styles.activityDescription}>
               {section.activities.map((activity) => activity.name).join(', ')}
             </p>
-            <button
-              className={styles.addButton}
-              onClick={() => handleAddSection(section._id)}
-            >
-              Add Section
-            </button>
           </li>
         ))}
       </ul>

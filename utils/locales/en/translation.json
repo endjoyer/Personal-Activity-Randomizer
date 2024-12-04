@@ -39,5 +39,7 @@
   "messagePlaceholder": "Message",
   "namePlaceholder": "Your name",
   "sendButton": "Send",
-  "contacts": "Contacts"
+  "contacts": "Contacts",
+  "collectionsActivities": "Collections of activities",
+  "collections": "Collections"
 }

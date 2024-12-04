@@ -7,10 +7,13 @@ import parIcon from '../public/images/par-icon.png';
 import Contact from './Contact';
 import Popup from './Popup';
 import ActivityList from './ActivityList';
+import { useTranslation } from 'react-i18next';
 
 const Header = ({ isAuthPage }: { isAuthPage?: boolean }) => {
   const [isContactOpen, setIsContactOpen] = useState(false);
   const [isActivityListOpen, setIsActivityListOpen] = useState(false);
+
+  const { t } = useTranslation();
 
   return (
     <header
@@ -30,18 +33,20 @@ const Header = ({ isAuthPage }: { isAuthPage?: boolean }) => {
         {Cookies.get('username')}
       </p>
       <div className="flex gap-4">
-        <button onClick={() => setIsActivityListOpen(true)}>Activities</button>
+        <Contact
+          isContactOpen={isContactOpen}
+          setIsContactOpen={setIsContactOpen}
+        />
+        <Lang />
+        <button onClick={() => setIsActivityListOpen(true)}>
+          {t('collections')}
+        </button>
         <Popup
           isOpen={isActivityListOpen}
           onClose={() => setIsActivityListOpen(false)}
         >
           <ActivityList />
         </Popup>
-        <Contact
-          isContactOpen={isContactOpen}
-          setIsContactOpen={setIsContactOpen}
-        />
-        <Lang />
         {Cookies.get('token') && <LogoutButton />}
       </div>
     </header>
