@@ -38,15 +38,19 @@ const Header = ({ isAuthPage }: { isAuthPage?: boolean }) => {
           setIsContactOpen={setIsContactOpen}
         />
         <Lang />
-        <button onClick={() => setIsActivityListOpen(true)}>
-          {t('collections')}
-        </button>
-        <Popup
-          isOpen={isActivityListOpen}
-          onClose={() => setIsActivityListOpen(false)}
-        >
-          <ActivityList />
-        </Popup>
+        {!isAuthPage && (
+          <>
+            <button onClick={() => setIsActivityListOpen(true)}>
+              {t('collections')}
+            </button>
+            <Popup
+              isOpen={isActivityListOpen}
+              onClose={() => setIsActivityListOpen(false)}
+            >
+              <ActivityList />
+            </Popup>
+          </>
+        )}
         {Cookies.get('token') && <LogoutButton />}
       </div>
     </header>
