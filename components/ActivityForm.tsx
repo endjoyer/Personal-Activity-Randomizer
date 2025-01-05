@@ -2,13 +2,14 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
-import { Button } from '@nextui-org/button';
 import { AppDispatch, RootState } from '../redux/store';
 import {
   addNewSection,
   addNewActivity,
   updateSection,
 } from '../redux/sectionsSlice';
+import ActivityInput from './ActivityInput';
+import ActivityButton from './ActivityButton';
 
 const ActivityForm = () => {
   const [input, setInput] = useState('');
@@ -112,33 +113,18 @@ const ActivityForm = () => {
           : t('addSection')}
       </h3>
       <div className="flex flex-col items-center gap-4 gap-2 w-full">
-        {isBulkAdd || isEditing ? (
-          <textarea
-            className="shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight resize focus:outline-none focus:shadow-outline mw-5 h-80 w-72 lg:w-[32rem]"
-            value={input}
-            onChange={(e) => setInput(e.target.value)}
-          />
-        ) : (
-          <input
-            className="shadow appearance-none border rounded w-80 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-            value={input}
-            onChange={(e) => setInput(e.target.value)}
-            onKeyPress={(e) => e.key === 'Enter' && handleAddClick()}
-          />
-        )}
-        <Button
-          className={`bg-gradient-to-tr from-green-500 to-blue-400 text-white shadow-lg hover:opacity-90 min-w-28 text-white font-bold py-2 px-4 rounded transition-transform duration-300 focus:outline-none`}
-          type="button"
-          onClick={() => {
-            if (isEditing) {
-              handleSaveClick();
-            } else {
-              handleAddClick();
-            }
-          }}
-        >
-          {isEditing ? t('save') : t('add')}
-        </Button>
+        <ActivityInput
+          value={input}
+          onChange={setInput}
+          onKeyPress={handleAddClick}
+          isBulkAdd={isBulkAdd}
+          isEditing={isEditing}
+        />
+        <ActivityButton
+          isEditing={isEditing}
+          onClick={isEditing ? handleSaveClick : handleAddClick}
+          label={isEditing ? t('save') : t('add')}
+        />
       </div>
     </div>
   );

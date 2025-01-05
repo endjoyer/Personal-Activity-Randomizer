@@ -1,5 +1,6 @@
+// components/SectionsList.tsx
 'use client';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   DragDropContext,
@@ -41,19 +42,23 @@ const SectionsList = () => {
   const selectedSectionId = useSelector(
     (state: RootState) => state.sections.selectedSection
   );
-  const loading = useSelector((state: RootState) => state.sections.loading);
   const menuRef = useRef<HTMLDivElement>(null);
   const renamePopupRef = useRef<HTMLDivElement>(null);
   const dispatch = useDispatch<AppDispatch>();
 
   const { t } = useTranslation();
 
+  const hasFetchedSections = useRef(false);
+
   useEffect(() => {
-    const fetchData = async () => {
-      await dispatch(fetchSections());
-      setIsLoading(false);
-    };
-    fetchData();
+    if (!hasFetchedSections.current) {
+      const fetchData = async () => {
+        await dispatch(fetchSections());
+        setIsLoading(false);
+      };
+      fetchData();
+      hasFetchedSections.current = true;
+    }
   }, [dispatch]);
 
   useEffect(() => {
@@ -67,120 +72,140 @@ const SectionsList = () => {
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
-  const handleSelectSection = (sectionId: string) => {
-    dispatch(selectSection(sectionId));
-  };
+  const handleSelectSection = useCallback(
+    (sectionId: string) => {
+      dispatch(selectSection(sectionId));
+    },
+    [dispatch]
+  );
 
-  const handleRemoveSection = (sectionId: string) => {
-    dispatch(deleteSection(sectionId));
-    setIsMenuOpen({});
-  };
+  const handleRemoveSection = useCallback(
+    (sectionId: string) => {
+      dispatch(deleteSection(sectionId));
+      setIsMenuOpen({});
+    },
+    [dispatch]
+  );
 
-  const handleRemoveActivity = (sectionId: string, activityId: string) => {
-    dispatch(deleteActivity({ sectionId, activityId }));
-    setIsMenuOpen({});
-  };
+  const handleRemoveActivity = useCallback(
+    (sectionId: string, activityId: string) => {
+      dispatch(deleteActivity({ sectionId, activityId }));
+      setIsMenuOpen({});
+    },
+    [dispatch]
+  );
 
-  const handleEditList = (sectionId: string) => {
-    dispatch(selectSection(sectionId));
-    setTimeout(() => {
-      dispatch(setBulkAdd(true));
-    }, 0);
-  };
+  const handleEditList = useCallback(
+    (sectionId: string) => {
+      dispatch(selectSection(sectionId));
+      setTimeout(() => {
+        dispatch(setBulkAdd(true));
+      }, 0);
+    },
+    [dispatch]
+  );
 
-  const handleRenameSection = (sectionId: string, newName: string) => {
-    dispatch(updateNameSection({ sectionId, newName }));
-    setEditingId(null);
-  };
+  const handleRenameSection = useCallback(
+    (sectionId: string, newName: string) => {
+      dispatch(updateNameSection({ sectionId, newName }));
+      setEditingId(null);
+    },
+    [dispatch]
+  );
 
-  const handleRenameActivity = (
-    sectionId: string,
-    activityId: string,
-    newName: string
-  ) => {
-    dispatch(updateActivity({ sectionId, activityId, newName }));
-    setEditingId(null);
-  };
+  const handleRenameActivity = useCallback(
+    (sectionId: string, activityId: string, newName: string) => {
+      dispatch(updateActivity({ sectionId, activityId, newName }));
+      setEditingId(null);
+    },
+    [dispatch]
+  );
 
-  const handleRenameClick = (
-    event: React.MouseEvent<HTMLLIElement, MouseEvent>,
-    id: string,
-    name: string,
-    isActivity: boolean
-  ) => {
-    const rect = event.currentTarget.getBoundingClientRect();
-    const top = rect.bottom - 130 + window.scrollY;
-    const left = rect.left + window.scrollX;
-    setEditingId(id);
-    setCurrentName(name);
-    setIsActivity(isActivity);
-    setPopupPosition({ top, left });
-    setIsMenuOpen({});
-  };
+  const handleRenameClick = useCallback(
+    (
+      event: React.MouseEvent<HTMLLIElement, MouseEvent>,
+      id: string,
+      name: string,
+      isActivity: boolean
+    ) => {
+      const rect = event.currentTarget.getBoundingClientRect();
+      const top = rect.bottom - 130 + window.scrollY;
+      const left = rect.left + window.scrollX;
+      setEditingId(id);
+      setCurrentName(name);
+      setIsActivity(isActivity);
+      setPopupPosition({ top, left });
+      setIsMenuOpen({});
+    },
+    []
+  );
 
-  const toggleSectionMenu = (
-    event: React.MouseEvent<HTMLButtonElement>,
-    sectionId: string
-  ) => {
-    event.stopPropagation();
-    setIsMenuOpen((prev) => ({ ...prev, [sectionId]: !prev[sectionId] }));
-  };
+  const toggleSectionMenu = useCallback(
+    (event: React.MouseEvent<HTMLButtonElement>, sectionId: string) => {
+      event.stopPropagation();
+      setIsMenuOpen((prev) => ({ ...prev, [sectionId]: !prev[sectionId] }));
+    },
+    []
+  );
 
-  const toggleActivityMenu = (
-    event: React.MouseEvent<HTMLButtonElement>,
-    activityId: string
-  ) => {
-    event.stopPropagation();
-    setIsMenuOpen((prev) => ({ ...prev, [activityId]: !prev[activityId] }));
-  };
+  const toggleActivityMenu = useCallback(
+    (event: React.MouseEvent<HTMLButtonElement>, activityId: string) => {
+      event.stopPropagation();
+      setIsMenuOpen((prev) => ({ ...prev, [activityId]: !prev[activityId] }));
+    },
+    []
+  );
 
-  const toggleSection = (sectionId: string) => {
+  const toggleSection = useCallback((sectionId: string) => {
     setExpandedSections((prev) => ({
       ...prev,
       [sectionId]: !prev[sectionId],
     }));
-  };
+  }, []);
 
-  const onDragEnd = (result: DropResult) => {
-    if (!result.destination) return;
+  const onDragEnd = useCallback(
+    (result: DropResult) => {
+      if (!result.destination) return;
 
-    const { source, destination } = result;
+      const { source, destination } = result;
 
-    if (
-      source.droppableId === 'all-activities' ||
-      destination.droppableId === 'all-activities'
-    ) {
-      return;
-    }
+      if (
+        source.droppableId === 'all-activities' ||
+        destination.droppableId === 'all-activities'
+      ) {
+        return;
+      }
 
-    if (
-      source.droppableId !== destination.droppableId ||
-      source.index === destination.index
-    ) {
-      return;
-    }
+      if (
+        source.droppableId !== destination.droppableId ||
+        source.index === destination.index
+      ) {
+        return;
+      }
 
-    const section = sections.find((s) => s._id === source.droppableId);
-    if (!section) return;
-    const newActivities = Array.from(section.activities);
-    const [removed] = newActivities.splice(source.index, 1);
-    newActivities.splice(destination.index, 0, removed);
+      const section = sections.find((s) => s._id === source.droppableId);
+      if (!section) return;
+      const newActivities = Array.from(section.activities);
+      const [removed] = newActivities.splice(source.index, 1);
+      newActivities.splice(destination.index, 0, removed);
 
-    dispatch(
-      moveActivity({
-        sectionId: source.droppableId,
-        fromIndex: source.index,
-        toIndex: destination.index,
-      })
-    );
+      dispatch(
+        moveActivity({
+          sectionId: source.droppableId,
+          fromIndex: source.index,
+          toIndex: destination.index,
+        })
+      );
 
-    dispatch(
-      updateActivityOrder({
-        sectionId: source.droppableId,
-        orderedActivities: newActivities.map((a) => a._id),
-      })
-    );
-  };
+      dispatch(
+        updateActivityOrder({
+          sectionId: source.droppableId,
+          orderedActivities: newActivities.map((a) => a._id),
+        })
+      );
+    },
+    [dispatch, sections]
+  );
 
   if (isLoading) {
     return (
@@ -374,4 +399,4 @@ const SectionsList = () => {
   );
 };
 
-export default SectionsList;
+export default React.memo(SectionsList);
