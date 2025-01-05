@@ -58,6 +58,7 @@ const ContactPopup = () => {
           <a
             href="mailto:alekseydevweb@gmail.com"
             className={styles.emailDetails}
+            aria-label="Email"
           >
             <img src="/images/envelope.svg" alt="Email" />
             <div className={styles.topic}>Email</div>
@@ -68,6 +69,7 @@ const ContactPopup = () => {
             target="_blank"
             rel="noopener noreferrer"
             className={styles.githubDetails}
+            aria-label="GitHub"
           >
             <img src="/images/github.svg" alt="GitHub" />
             <div className={styles.topic}>GitHub</div>
@@ -78,6 +80,7 @@ const ContactPopup = () => {
             target="_blank"
             rel="noopener noreferrer"
             className={styles.telegramDetails}
+            aria-label="Telegram"
           >
             <img src="/images/telegram.svg" alt="Telegram" />
             <div className={styles.topic}>Telegram</div>
@@ -95,6 +98,7 @@ const ContactPopup = () => {
                 name="name"
                 value={formData.name}
                 onChange={handleChange}
+                aria-label={t('namePlaceholder')}
               />
             </div>
             <div className={`${styles.inputBox} ${styles.whisValidation}`}>
@@ -104,8 +108,12 @@ const ContactPopup = () => {
                 name="email"
                 value={formData.email}
                 onChange={handleChange}
+                aria-label={t('emailPlaceholder')}
+                aria-describedby="emailError"
               />
-              <label className={styles.errorLabel}>{errors.email}</label>
+              <label id="emailError" className={styles.errorLabel}>
+                {errors.email}
+              </label>
             </div>
             <div className={`${styles.inputBox} ${styles.messageBox}`}>
               <textarea
@@ -113,6 +121,7 @@ const ContactPopup = () => {
                 name="message"
                 value={formData.message}
                 onChange={handleChange}
+                aria-label={t('messagePlaceholder')}
               ></textarea>
             </div>
             <div className={styles.button}>
