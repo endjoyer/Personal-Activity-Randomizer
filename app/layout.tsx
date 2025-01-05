@@ -9,6 +9,9 @@ export const metadata: Metadata = {
   title: 'Personal Activity Randomizer',
   description:
     'An application for systematization and random selection of your leisure activities.',
+  applicationName: 'PAR',
+  generator: 'Personal Activity Randomizer',
+  creator: 'Abamzarov Aleksey',
   keywords: 'activity, randomizer, leisure, hobbies, productivity',
   icons: {
     icon: '/images/par-icon.png',
