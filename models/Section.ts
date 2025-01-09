@@ -10,6 +10,7 @@ export interface ISection extends Document {
   user: mongoose.Schema.Types.ObjectId;
   name: string;
   activities: IActivity[];
+  order: number;
 }
 
 const activitySchema: Schema = new Schema({
@@ -20,6 +21,7 @@ const sectionSchema: Schema = new Schema({
   user: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
   name: { type: String, required: true },
   activities: [activitySchema],
+  order: { type: Number, required: true },
 });
 
 export default mongoose.models.Section ||
