@@ -2,6 +2,7 @@ import { ISection } from '@/models/Section';
 import { createSlice, PayloadAction, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 import { t } from 'i18next';
+import { RootState } from './store';
 
 interface Section {
   _id: string;
@@ -186,6 +187,28 @@ export const updateActivityOrder = createAsyncThunk(
   }
 );
 
+export const updateSectionOrder = createAsyncThunk(
+  'sections/updateSectionOrder',
+  async (orderedSections: string[], { getState, rejectWithValue }) => {
+    try {
+      const state = getState() as RootState;
+      const allActivitiesSection = state.sections.sections.find(
+        (section) => section._id === 'all-activities'
+      );
+      const filteredSections = orderedSections.filter(
+        (id) => id !== 'all-activities'
+      );
+      const response = await axios.put('/api/sections/order', {
+        orderedSections: filteredSections,
+      });
+      const updatedSections = [allActivitiesSection, ...response.data.sections];
+      return { sections: updatedSections };
+    } catch (error: any) {
+      return rejectWithValue(error.response?.data);
+    }
+  }
+);
+
 const sectionsSlice = createSlice({
   name: 'sections',
   initialState,
@@ -229,6 +252,14 @@ const sectionsSlice = createSlice({
         const [removed] = section.activities.splice(fromIndex, 1);
         section.activities.splice(toIndex, 0, removed);
       }
+    },
+    moveSection: (
+      state,
+      action: PayloadAction<{ fromIndex: number; toIndex: number }>
+    ) => {
+      const { fromIndex, toIndex } = action.payload;
+      const [removed] = state.sections.splice(fromIndex, 1);
+      state.sections.splice(toIndex, 0, removed);
     },
     toggleRepeatActivities: (state, action: PayloadAction<boolean>) => {
       state.repeatActivities = action.payload;
@@ -337,6 +368,9 @@ const sectionsSlice = createSlice({
         if (sectionIndex !== -1) {
           state.sections[sectionIndex].activities = action.payload.activities;
         }
+      })
+      .addCase(updateSectionOrder.fulfilled, (state, action) => {
+        state.sections = action.payload.sections;
       });
   },
 });
@@ -351,6 +385,7 @@ export const {
   resetUsedActivities,
   selectSection,
   moveActivity,
+  moveSection,
   toggleBulkAdd,
   setBulkAdd,
 } = sectionsSlice.actions;

@@ -46,7 +46,6 @@ const ActivityRandomizer = () => {
   const dispatch = useDispatch<AppDispatch>();
   const { t, i18n } = useTranslation();
 
-  // Загружаем состояние чекбоксов из localStorage при монтировании компонента
   useEffect(() => {
     const savedRepeatActivities = loadState('repeatActivities');
     const savedWeightedRandom = loadState('weightedRandom');
@@ -63,7 +62,6 @@ const ActivityRandomizer = () => {
     dispatch(updateAllActivitiesSectionName(t('allActivities')));
   }, [i18n.language, dispatch, t]);
 
-  // Обработчики для переключения чекбоксов и сохранения их состояния в localStorage
   const handleToggleRepeatActivities = () => {
     dispatch(toggleRepeatActivities(!repeatActivities));
     saveState('repeatActivities', !repeatActivities);
@@ -81,14 +79,12 @@ const ActivityRandomizer = () => {
     if (selectedActivities && selectedActivities.length > 0) {
       let availableActivities = selectedActivities;
 
-      // Фильтруем уже выданные активности, если повторение отключено
       if (!repeatActivities) {
         availableActivities = selectedActivities.filter(
           (_, index) => !usedActivities.includes(index)
         );
       }
 
-      // Если доступных активностей нет, сбрасываем список и начинаем сначала
       if (availableActivities.length === 0) {
         dispatch(resetUsedActivities());
         availableActivities = selectedActivities;
@@ -96,21 +92,17 @@ const ActivityRandomizer = () => {
 
       let randomIndex;
       if (weightedRandom) {
-        // Создаем взвешенный список активностей
         const weightedList = availableActivities.flatMap((activity, index) =>
           Array.from(
             { length: availableActivities.length - index },
             () => activity
           )
         );
-        // Выбираем случайный индекс из взвешенного списка
         randomIndex = Math.floor(Math.random() * weightedList.length);
-        // Находим индекс выбранной активности в исходном массиве
         const originalIndex = selectedActivities.indexOf(
           weightedList[randomIndex]
         );
         setRandomActivity(weightedList[randomIndex].name);
-        // Добавляем индекс выбранной активности в список использованных
         dispatch(addUsedActivity(originalIndex));
       } else {
         randomIndex = Math.floor(Math.random() * availableActivities.length);
@@ -131,7 +123,6 @@ const ActivityRandomizer = () => {
     }
   };
 
-  // Эффект для сброса списка использованных активностей при смене раздела
   useEffect(() => {
     dispatch(resetUsedActivities());
   }, [selectedSection, dispatch]);
@@ -139,7 +130,7 @@ const ActivityRandomizer = () => {
   return (
     <div className={`sm:p-10 sm:pt-5 ${styles.randomizerContainer}`}>
       <div className="mb-6">
-        <p className="text-lg font-semibold">
+        <p className="activity-form text-lg font-semibold">
           {selectedSectionName ? selectedSectionName : t('selectSection')}
         </p>
         {selectedSectionName && randomActivity && (

@@ -15,11 +15,17 @@ export default async function handler(
   }
 
   if (req.method === 'GET') {
-    const sections = await Section.find({ user: userId });
+    const sections = await Section.find({ user: userId }).sort({ order: 1 });
     res.status(200).json(sections);
   } else if (req.method === 'POST') {
     const { name } = req.body;
-    const newSection = new Section({ user: userId, name, activities: [] });
+    const sectionCount = await Section.countDocuments({ user: userId });
+    const newSection = new Section({
+      user: userId,
+      name,
+      activities: [],
+      order: sectionCount,
+    });
     const savedSection = await newSection.save();
     res.status(201).json(savedSection);
   } else {
