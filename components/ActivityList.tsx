@@ -21,15 +21,12 @@ const ActivityList = () => {
             name: selectedSection.name,
           });
           const newSectionId = response.data._id;
-
-          dispatch(
-            addSectionWithActivities({
-              ...selectedSection,
-              _id: newSectionId,
-            })
+          const updatedSection = await updateActivities(
+            newSectionId,
+            selectedSection.activities
           );
 
-          await updateActivities(newSectionId, selectedSection.activities);
+          dispatch(addSectionWithActivities(updatedSection));
         } catch (error) {
           console.error('Error adding section to user database', error);
         }
@@ -58,8 +55,11 @@ const ActivityList = () => {
       if (!updateResponse.ok) {
         throw new Error('Failed to update activities');
       }
+
+      return await updateResponse.json();
     } catch (error) {
       console.error('Error saving activities:', error);
+      throw error;
     }
   };
 

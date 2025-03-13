@@ -17,20 +17,23 @@ export default async function handler(
   const { _id } = req.query;
 
   if (req.method === 'PUT') {
-    const { activities } = req.body;
-    const section = await Section.findById(_id);
-    if (!section) {
-      return res.status(404).json({ message: 'Section not found' });
+    try {
+      const { activities } = req.body;
+
+      const section = await Section.findById(_id);
+      if (!section) {
+        return res.status(404).json({ message: 'Section not found' });
+      }
+
+      section.activities = activities;
+      await section.save();
+
+      const updatedSection = await Section.findById(_id);
+      res.status(200).json(updatedSection);
+    } catch (error) {
+      console.error('Error updating activities:', error);
+      res.status(500).json({ message: 'Server error' });
     }
-
-    section.activities = [];
-
-    for (const activity of activities) {
-      section.activities.push({ name: activity.name });
-    }
-
-    await section.save();
-    res.status(200).json(section);
   } else {
     res.setHeader('Allow', ['PUT']);
     res.status(405).end(`Method ${req.method} Not Allowed`);
