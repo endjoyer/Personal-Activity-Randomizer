@@ -290,7 +290,7 @@ const SectionsList = () => {
                         )}
                         {isMenuOpen[section._id] && (
                           <div
-                            className="origin-top-right absolute right-0 mt-40 mr-2 w-52 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 z-10"
+                            className="activity-form origin-top-right absolute right-0 mt-40 mr-2 w-52 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 z-10"
                             ref={menuRef}
                           >
                             <ul>
@@ -371,7 +371,7 @@ const SectionsList = () => {
                                       {isMenuOpen[activity._id] &&
                                         section._id !== 'all-activities' && (
                                           <div
-                                            className="origin-top-right absolute right-0 mt-8 mr-4 w-52 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 z-10"
+                                            className="activity-form origin-top-right absolute right-0 mt-8 mr-4 w-52 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 z-10"
                                             ref={menuRef}
                                           >
                                             <ul>
