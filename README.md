@@ -1,38 +1,161 @@
 # Personal Activity Randomizer (PAR)
 
-(EN)
-An application for organizing and randomly selecting types of leisure activities.
+<p align="center">
+  <img src="/public/images/par-icon.png" alt="PAR Logo" width="200"/>
+</p>
 
-## Purpose of the Application?
+## 🤔 About <a name="about"></a>
 
-I think everyone has been there. You finish a challenging task, and it’s finally time to relax. But you just can’t decide what to do with your well-deserved break. And you’re too tired to think about it. Eventually, you realize you've spent a lot of time watching a YouTube video about an ant colony or going through yet another set of shorts. And you end up going to bed with a sense that your time wasn’t used as meaningfully as it could’ve been.
+A modern web application for organizing and randomly selecting leisure activities to eliminate decision fatigue and enhance your free time experience.
 
-With this app, you can create a list of activities in advance that you’d like to do, making it much easier to choose and saving you from decision fatigue. This approach will likely motivate you toward a more active and interesting form of relaxation—though, of course, your plans may vary! You set the options yourself, choosing things you’d likely want to do. And if you don’t like the randomly suggested option, you can always reroll or just pick directly from the list. The choice is yours... except for the randomness )
+![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white)
+![Next.js](https://img.shields.io/badge/Next.js-000000?style=for-the-badge&logo=next.js&logoColor=white)
+![MongoDB](https://img.shields.io/badge/MongoDB-4EA94B?style=for-the-badge&logo=mongodb&logoColor=white)
+![Redux](https://img.shields.io/badge/Redux-593D88?style=for-the-badge&logo=redux&logoColor=white)
+![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)
 
-## Development Stage (Beta)
+## 📝 Table of Contents
 
-Currently, the app is still under development. Some planned features aren’t implemented or finalized, and code refactoring has yet to be completed. Roughly 85% of the plan is finished. Future improvements are in progress. It would be incredibly helpful if you could share any suggestions for additional features or enhancements with me!
+- [About](#about)
+- [Purpose of the Application](#purpose)
+- [Features](#features)
+- [Development Stage](#development)
+- [Technologies](#technologies)
+- [Project Structure](#structure)
+- [Getting Started](#getting-started)
+- [Internationalization](#internationalization)
+- [Author](#author)
 
-## Technologies
+## 🎯 Purpose of the Application <a name="purpose"></a>
 
-- TypeScript
-- Next.js
-- Redux Toolkit
-- MongoDB
-- Tailwind CSS
-- Axios
-- bcryptjs
-- i18next
-- jose
-- js-cookie
-- jsonwebtoken
-- react-beautiful-dnd
-  and others
+Everyone has faced this scenario: You've just completed a challenging task, and it's time to relax, but you can't decide what to do. You're too tired to think, and before you know it, you've spent an hour watching random YouTube videos or scrolling through social media. Eventually, you go to bed feeling like your time wasn't meaningfully spent.
 
-## Commands
+**Personal Activity Randomizer** solves this problem by letting you create lists of activities you'd enjoy during your free time. When you're too tired to decide, just click a button and let PAR suggest what to do next! Don't like the suggestion? Just re-roll or pick directly from your list.
 
-```bash
+## ✨ Features <a name="features"></a>
+
+- **User Account System**: Secure signup/login with JWT authentication
+- **Customizable Sections**: Create, edit, and organize your own activity categories
+- **Activity Management**: Add, edit, delete, and reorder activities within sections
+- **Smart Randomization**: Weighted random option gives higher chances to newer activities
+- **Drag & Drop Interface**: Easy reordering of sections and activities
+- **Ready-to-Use Collections**: Pre-populated activity lists across various categories
+- **Multi-language Support**: Available in English and Russian
+- **Responsive Design**: Works seamlessly on desktop and mobile devices
+
+## 🚧 Development Stage (Beta) <a name="development"></a>
+
+Currently, the app is still under development. Some planned features aren't implemented or finalized, and code refactoring has yet to be completed. Roughly 85% of the plan is finished. Future improvements are in progress. It would be incredibly helpful if you could share any suggestions for additional features or enhancements with me!
+
+## 💻 Technologies <a name="technologies"></a>
+
+### Core Technologies:
+
+- **TypeScript**: Strongly typed programming language
+- **Next.js**: React framework with SSR capabilities
+- **Redux Toolkit**: State management library
+- **MongoDB**: NoSQL database for data storage
+- **Tailwind CSS**: Utility-first CSS framework
+
+### Additional Libraries and Tools:
+
+- **@hello-pangea/dnd**: Drag and drop functionality (fork of react-beautiful-dnd)
+- **axios**: Promise-based HTTP client
+- **bcryptjs**: Password hashing library
+- **i18next**: Internationalization framework
+- **jose**: JavaScript implementation of JSON Object Signing and Encryption
+- **js-cookie**: Cookie handling JavaScript API
+- **jsonwebtoken**: Implementation of JSON Web Tokens
+- **mongoose**: MongoDB object modeling tool
+- **NextUI**: UI component library for React
+- **nookies**: Cookie parsing and setting
+- **react-beautiful-dnd**: Accessible drag and drop for lists
+- **react-i18next**: React bindings for i18next
+- **uuid**: For generating unique identifiers
+
+## 📁 Project Structure <a name="structure"></a>
+
+```
+
+├── app/ # Next.js 13 App Router files
+│ ├── [locale]/ # Locale-specific routes
+│ ├── api/ # API endpoints
+│ ├── login/ # Login page
+│ ├── register/ # Registration page
+│ ├── styles/ # Global styles
+│ ├── ReduxProvider.tsx # Redux context provider
+│ ├── layout.tsx # Root layout component
+│ └── page.tsx # Home page component
+├── components/ # React components
+│ ├── ActivityForm.tsx # Form for adding activities
+│ ├── ActivityList.tsx # List of activities
+│ ├── ActivityRandomizer.tsx # Randomizer component
+│ ├── Header.tsx # Page header
+│ ├── Loader.tsx # Loading indicator
+│ ├── SectionsList.tsx # List of sections
+│ └── withAuth.tsx # Authentication HOC
+├── models/ # Mongoose data models
+│ ├── Activity.ts # Activity schema
+│ ├── Section.ts # Section schema
+│ └── User.ts # User schema
+├── public/ # Static files
+│ └── images/ # Image assets
+├── redux/ # Redux state management
+│ ├── authSlice.ts # Authentication state
+│ ├── sectionsSlice.ts # Sections and activities state
+│ └── store.ts # Redux store configuration
+├── utils/ # Utility functions
+│ ├── activitiesData.ts # Predefined activities collections
+│ ├── auth.ts # Authentication utilities
+│ ├── dbConnect.ts # Database connection
+│ ├── locales/ # i18n translation files
+│ └── localStorageHelpers.ts # Local storage helpers
+```
+
+## 🏁 Getting Started <a name="getting-started"></a>
+
+### Prerequisites
+
+- Node.js (v14 or later)
+- npm or yarn
+- MongoDB database
+
+### Installation
+
+1. Clone the repository:
+
+```sh
+   git clone https://github.com/endjoyer/personal-activity-randomizer.git
+   cd personal-activity-randomizer
+```
+
+2. Install dependencies:
+
+```sh
+   npm install
+```
+
+3. Set up environment variables:
+   Create a `.env.local` file in the root directory with your MongoDB connection string and JWT secret:
+
+```sh
+    MONGODB_URI=your_mongodb_connection_string
+    JWT_SECRET=your_jwt_secret
+```
+
+4. Start the development server:
+
+```sh
+   npm run dev
+```
+
+5. Open [http://localhost:3000](http://localhost:3000) in your browser to see the application.
+
+### Commands
+
 # install dependencies
+
+```sh
 $ npm install
 
 # run development server at localhost:3000
@@ -41,20 +164,35 @@ $ npm run dev
 # build and start the server
 $ npm run build
 $ npm run start
+
+# run linter
+$ npm run lint
 ```
+
+## 🌐 Internationalization <a name="internationalization"></a>
+
+PAR currently supports:
+
+- English (EN)
+- Russian (RU)
+
+The application uses i18next and react-i18next for internationalization. Translation files are located in the `/utils/locales/` directory. Language detection is automatic based on your browser settings, or you can manually select your preferred language.
+
+## 👨‍💻 Author <a name="author"></a>
+
+- **Abamzarov Aleksey** - Creator and maintainer
+- Contact: [GitHub](https://github.com/endjoyer)
+
+## 🤝 Contributing
+
+Feedback and contributions are welcome! If you have suggestions for improvements or new features, please create an issue or submit a pull request.
 
 ---
 
-(RU)
-Приложение для систематизации и случайного подбора видов вашего досуга.
-
-## Цель приложения
-
-Думаю, у каждого бывало такое. Вот выполнил какую-то сложную задачу и пришло время наконец хорошо отдохнуть. Но вы не можешь выбрать, чем же заняться в свой заслуженный отдых. А на размышления уже нет сил. И в итоге прошло уже много времени, и вы осознаете себя смотрящим ролик на YouTube про колонию муравьёв или смотрящим уже сотый shorts. И ты ложишься спать с ощущением бесполезности проведённого времени.
-
-С помощью этого приложения вы сможете заранее выбрать перечень дел, которыми вы хотели бы заняться. И вам нужно будет прикладывать значительно меньше усилий для выбора и раздумий, что наверняка замотивирует вас к более активному и интересному отдыху. Хотя может быть у вас другие планы. Кто знает? Вы сами вписываете, чем вам вероятно придётся заняться. И если вам не понравится случайно предложенный вариант, то всегда можете зарандомить снова или просто выбрать саму из списка. Все в ваших руках..., даже случайность )
-
-## Стадия разработки (Beta)
-
-На данный момент, приложение ещё в разработке. Не реализованно и не доделаны некоторые запланированные функции, также не произведен рефактор кода. Примерно выполнено 85% из плана. В будущем будет постепенно дорабатываться.
-Будет очень полезно, если напишите мне, что вы считаете нужно добавить или доработать.
+<p align="center">
+  <a href="https://personal-activity-randomizer.vercel.app/">Live Demo</a>
+  •
+  <a href="https://github.com/endjoyer/personal-activity-randomizer/issues">Report Bug</a>
+  •
+  <a href="https://github.com/endjoyer/personal-activity-randomizer/issues">Request Feature</a>
+</p>
